@@ -132,13 +132,13 @@ export default function DemoPage() {
                     ))}
                   </div>
                   <div className="mt-6 flex gap-3">
-                    <Link href={`https://${tenant.slug}.zuru.africa`} target="_blank" className="flex-1">
+                    <Link href={`/_sites/${tenant.slug}`} className="flex-1">
                       <Button className="w-full bg-zuru-sunset text-white hover:bg-zuru-sunset-dark">
                         <Globe className="mr-2 h-4 w-4" />
                         View Portal
                       </Button>
                     </Link>
-                    <Link href={`/demo/${tenant.slug}`} className="flex-1">
+                    <Link href={`/_sites/${tenant.slug}/plan`} className="flex-1">
                       <Button variant="outline" className="w-full border-zuru-plum text-zuru-plum hover:bg-zuru-plum/5">
                         <Sparkles className="mr-2 h-4 w-4" />
                         Try AI Planner
