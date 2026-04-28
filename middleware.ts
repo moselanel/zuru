@@ -16,11 +16,13 @@ function isMarketingHost(host: string): boolean {
   }
   
   // Check for Vercel preview/deployment URLs (treat as marketing)
-  // e.g., project-name.vercel.app or project-name-git-branch.vercel.app
-  if (hostWithoutPort.endsWith(".vercel.app")) {
-    // Only treat as marketing if no subdomain pattern before .vercel.app
-    const parts = hostWithoutPort.replace(".vercel.app", "").split(".")
-    return parts.length === 1 // No subdomain, just project name
+  // Handles: .vercel.app, .vercel.run (v0 sandbox), .vercel.dev
+  if (
+    hostWithoutPort.endsWith(".vercel.app") ||
+    hostWithoutPort.endsWith(".vercel.run") ||
+    hostWithoutPort.endsWith(".vercel.dev")
+  ) {
+    return true
   }
   
   return false
