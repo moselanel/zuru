@@ -1,0 +1,15 @@
+<svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="80" fill="#3A1545" rx="8"/>
+  <polygon points="40,4 68,20 68,44 40,60 12,44 12,20" fill="#5C2D6E" stroke="#E8891A" stroke-width="1.5"/>
+  <polygon points="40,14 58,24 58,40 40,50 22,40 22,24" fill="#3A1545"/>
+  <polygon points="40,4 40,14 22,24 12,20" fill="#D4541A" opacity="0.9"/>
+  <polygon points="40,4 40,14 58,24 68,20" fill="#E8891A" opacity="0.8"/>
+  <polygon points="12,20 22,24 22,40 12,44" fill="#D4541A" opacity="0.6"/>
+  <polygon points="68,20 58,24 58,40 68,44" fill="#5C2D6E" opacity="0.8"/>
+  <polygon points="22,40 40,50 40,60 12,44" fill="#E8891A" opacity="0.6"/>
+  <polygon points="58,40 40,50 40,60 68,44" fill="#D4541A" opacity="0.7"/>
+  <circle cx="40" cy="32" r="6" fill="#E8891A" opacity="0.95"/>
+  <circle cx="40" cy="32" r="3" fill="#F5EDD8"/>
+  <text x="86" y="42" font-family="'Plus Jakarta Sans', Inter, sans-serif" font-size="36" font-weight="600" letter-spacing="-0.5" fill="#F5EDD8">Zuru</text>
+  <text x="88" y="58" font-family="'Plus Jakarta Sans', Inter, sans-serif" font-size="10" font-weight="400" letter-spacing="3" fill="#E8891A">DISCOVER AFRICA</text>
+</svg>

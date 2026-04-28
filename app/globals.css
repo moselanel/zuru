@@ -1,0 +1,201 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Zuru - Discover Africa Theme */
+:root {
+  /* Zuru Brand Colors */
+  --zuru-sunset: #D4541A;
+  --zuru-sunset-light: #F0825A;
+  --zuru-sunset-dark: #A33D0F;
+  --zuru-amber: #E8891A;
+  --zuru-amber-light: #F5B05A;
+  --zuru-plum: #5C2D6E;
+  --zuru-plum-dark: #3A1545;
+  --zuru-sand: #F5EDD8;
+  --zuru-sand-dark: #E8D9B8;
+  --zuru-ink: #1A0A22;
+
+  /* Light Mode */
+  --background: #FFFFFF;
+  --foreground: #1A0A22;
+
+  --card: #FFFFFF;
+  --card-foreground: #1A0A22;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1A0A22;
+
+  /* Primary: Sunset Orange */
+  --primary: #D4541A;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary: Sand */
+  --secondary: #F5EDD8;
+  --secondary-foreground: #1A0A22;
+
+  /* Muted: Light Sand */
+  --muted: #F5EDD8;
+  --muted-foreground: #5C2D6E;
+
+  /* Accent: Plum */
+  --accent: #5C2D6E;
+  --accent-foreground: #FFFFFF;
+
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+
+  /* Border */
+  --border: #E8D9B8;
+  --input: #E8D9B8;
+  --ring: #D4541A;
+
+  /* Charts */
+  --chart-1: #D4541A;
+  --chart-2: #E8891A;
+  --chart-3: #5C2D6E;
+  --chart-4: #3A1545;
+  --chart-5: #F0825A;
+
+  --radius: 0.625rem;
+
+  /* Sidebar */
+  --sidebar: #3A1545;
+  --sidebar-foreground: #F5EDD8;
+  --sidebar-primary: #D4541A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #5C2D6E;
+  --sidebar-accent-foreground: #F5EDD8;
+  --sidebar-border: #5C2D6E;
+  --sidebar-ring: #D4541A;
+}
+
+.dark {
+  --background: #1A0A22;
+  --foreground: #F5EDD8;
+
+  --card: #3A1545;
+  --card-foreground: #F5EDD8;
+
+  --popover: #3A1545;
+  --popover-foreground: #F5EDD8;
+
+  --primary: #D4541A;
+  --primary-foreground: #FFFFFF;
+
+  --secondary: #5C2D6E;
+  --secondary-foreground: #F5EDD8;
+
+  --muted: #3A1545;
+  --muted-foreground: #E8D9B8;
+
+  --accent: #E8891A;
+  --accent-foreground: #1A0A22;
+
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #5C2D6E;
+  --input: #5C2D6E;
+  --ring: #D4541A;
+
+  --chart-1: #F0825A;
+  --chart-2: #F5B05A;
+  --chart-3: #5C2D6E;
+  --chart-4: #E8891A;
+  --chart-5: #D4541A;
+
+  --sidebar: #1A0A22;
+  --sidebar-foreground: #F5EDD8;
+  --sidebar-primary: #D4541A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #3A1545;
+  --sidebar-accent-foreground: #F5EDD8;
+  --sidebar-border: #5C2D6E;
+  --sidebar-ring: #D4541A;
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+  --font-serif: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", Georgia, serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
+  
+  /* Zuru brand colors */
+  --color-zuru-sunset: var(--zuru-sunset);
+  --color-zuru-sunset-light: var(--zuru-sunset-light);
+  --color-zuru-sunset-dark: var(--zuru-sunset-dark);
+  --color-zuru-amber: var(--zuru-amber);
+  --color-zuru-amber-light: var(--zuru-amber-light);
+  --color-zuru-plum: var(--zuru-plum);
+  --color-zuru-plum-dark: var(--zuru-plum-dark);
+  --color-zuru-sand: var(--zuru-sand);
+  --color-zuru-sand-dark: var(--zuru-sand-dark);
+  --color-zuru-ink: var(--zuru-ink);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
