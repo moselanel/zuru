@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
   console.log("[v0] Middleware - host:", host, "pathname:", pathname)
 
   // Skip rewriting for internal paths
-  if (pathname.startsWith("/_sites") || pathname.startsWith("/api") || pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/sites") || pathname.startsWith("/api") || pathname.startsWith("/admin")) {
     console.log("[v0] Middleware - internal path, updating session")
     const response = await updateSession(request)
     return response
@@ -89,7 +89,7 @@ export async function middleware(request: NextRequest) {
     const sessionResponse = await updateSession(request)
     
     const url = request.nextUrl.clone()
-    url.pathname = `/_sites/${tenantSlug}${pathname}`
+    url.pathname = `/sites/${tenantSlug}${pathname}`
     
     const response = NextResponse.rewrite(url, {
       request,
