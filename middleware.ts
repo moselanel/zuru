@@ -83,7 +83,7 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // Tenant site routing - rewrite to /_sites/[domain] path
+  // Tenant site routing - rewrite to /sites/[domain] path
   if (tenantSlug) {
     // First update the session to handle auth cookies
     const sessionResponse = await updateSession(request)
