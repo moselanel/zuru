@@ -15,6 +15,7 @@ export function TenantHeader() {
     { label: "Destinations", href: "/destinations" },
     { label: "Experiences", href: "/experiences" },
     { label: "Accommodations", href: "/accommodations" },
+    { label: "AI Planner", href: "/plan" },
     { label: "Contact", href: "/contact" },
   ]
 

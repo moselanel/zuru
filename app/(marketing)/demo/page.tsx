@@ -9,6 +9,7 @@ const demoTenants = [
   {
     name: "South African Tourism",
     slug: "southafrica",
+    url: "https://southafrica.zuru.africa",
     description: "Discover the Rainbow Nation - from Table Mountain and the Garden Route to Kruger safaris, Cape Winelands, and vibrant cities like Cape Town and Johannesburg.",
     region: "Southern Africa",
     image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800",
@@ -17,6 +18,7 @@ const demoTenants = [
   {
     name: "Visit Rwanda",
     slug: "visitrwanda",
+    url: "https://visitrwanda.zuru.africa",
     description: "Experience the land of a thousand hills with gorilla trekking, vibrant Kigali, and stunning lake views. Rwanda is Africa's most remarkable conservation success story, offering unforgettable wildlife encounters and warm hospitality.",
     region: "East Africa",
     image: "https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=800",
@@ -132,18 +134,18 @@ export default function DemoPage() {
                     ))}
                   </div>
                   <div className="mt-6 flex gap-3">
-                    <Link href={`/_sites/${tenant.slug}`} className="flex-1">
+                    <a href={tenant.url} target="_blank" rel="noopener noreferrer" className="flex-1">
                       <Button className="w-full bg-zuru-sunset text-white hover:bg-zuru-sunset-dark">
                         <Globe className="mr-2 h-4 w-4" />
                         View Portal
                       </Button>
-                    </Link>
-                    <Link href={`/_sites/${tenant.slug}/plan`} className="flex-1">
+                    </a>
+                    <a href={`${tenant.url}/plan`} target="_blank" rel="noopener noreferrer" className="flex-1">
                       <Button variant="outline" className="w-full border-zuru-plum text-zuru-plum hover:bg-zuru-plum/5">
                         <Sparkles className="mr-2 h-4 w-4" />
                         Try AI Planner
                       </Button>
-                    </Link>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
