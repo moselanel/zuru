@@ -24,6 +24,9 @@ export default function TenantHomePage() {
   const featuredExperiences = experiences?.slice(0, 3) || []
   const featuredAccommodations = accommodations?.slice(0, 3) || []
 
+  // Base path for all tenant links
+  const basePath = `/sites/${domain}`
+
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -52,13 +55,13 @@ export default function TenantHomePage() {
             Explore breathtaking destinations, immersive experiences, and world-class accommodations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href={`/destinations`}>
+            <Link href={`${basePath}/destinations`}>
               <Button size="lg" className="bg-white text-gray-900 hover:bg-white/90">
                 <Compass className="mr-2 h-5 w-5" />
                 Explore Destinations
               </Button>
             </Link>
-            <Link href={`/contact`}>
+            <Link href={`${basePath}/contact`}>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                 Plan Your Trip
               </Button>
@@ -76,7 +79,7 @@ export default function TenantHomePage() {
                 <h2 className="text-3xl font-bold text-foreground">Featured Destinations</h2>
                 <p className="text-muted-foreground mt-2">Discover our most popular places to visit</p>
               </div>
-              <Link href={`/destinations`}>
+              <Link href={`${basePath}/destinations`}>
                 <Button variant="ghost" className="group">
                   View All
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -86,7 +89,7 @@ export default function TenantHomePage() {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featuredDestinations.map((destination: any) => (
-                <Link key={destination.id} href={`/destinations/${destination.slug}`}>
+                <Link key={destination.id} href={`${basePath}/destinations/${destination.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg">
                     <div className="relative h-48 overflow-hidden">
                       <img
@@ -125,7 +128,7 @@ export default function TenantHomePage() {
                 <h2 className="text-3xl font-bold text-foreground">Experiences</h2>
                 <p className="text-muted-foreground mt-2">Unforgettable activities and adventures</p>
               </div>
-              <Link href={`/experiences`}>
+              <Link href={`${basePath}/experiences`}>
                 <Button variant="ghost" className="group">
                   View All
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -135,7 +138,7 @@ export default function TenantHomePage() {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featuredExperiences.map((experience: any) => (
-                <Link key={experience.id} href={`/experiences/${experience.slug}`}>
+                <Link key={experience.id} href={`${basePath}/experiences/${experience.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg">
                     <div className="relative h-48 overflow-hidden">
                       <img
@@ -181,7 +184,7 @@ export default function TenantHomePage() {
                 <h2 className="text-3xl font-bold text-foreground">Where to Stay</h2>
                 <p className="text-muted-foreground mt-2">Hand-picked accommodations for every traveler</p>
               </div>
-              <Link href={`/accommodations`}>
+              <Link href={`${basePath}/accommodations`}>
                 <Button variant="ghost" className="group">
                   View All
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -191,7 +194,7 @@ export default function TenantHomePage() {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featuredAccommodations.map((accommodation: any) => (
-                <Link key={accommodation.id} href={`/accommodations/${accommodation.slug}`}>
+                <Link key={accommodation.id} href={`${basePath}/accommodations/${accommodation.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg">
                     <div className="relative h-48 overflow-hidden">
                       <img
@@ -239,7 +242,7 @@ export default function TenantHomePage() {
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
             Let us help you plan the perfect trip. Get in touch with our travel experts today.
           </p>
-          <Link href={`/contact`}>
+          <Link href={`${basePath}/contact`}>
             <Button size="lg" className="bg-white text-gray-900 hover:bg-white/90">
               <Calendar className="mr-2 h-5 w-5" />
               Plan Your Trip
