@@ -16,11 +16,13 @@ function isMarketingHost(host: string): boolean {
   }
   
   // Check for Vercel preview/deployment URLs (treat as marketing)
-  // e.g., project-name.vercel.app or project-name-git-branch.vercel.app
-  if (hostWithoutPort.endsWith(".vercel.app")) {
-    // Only treat as marketing if no subdomain pattern before .vercel.app
-    const parts = hostWithoutPort.replace(".vercel.app", "").split(".")
-    return parts.length === 1 // No subdomain, just project name
+  // Handles: .vercel.app, .vercel.run (v0 sandbox), .vercel.dev
+  if (
+    hostWithoutPort.endsWith(".vercel.app") ||
+    hostWithoutPort.endsWith(".vercel.run") ||
+    hostWithoutPort.endsWith(".vercel.dev")
+  ) {
+    return true
   }
   
   return false
@@ -60,7 +62,7 @@ export async function middleware(request: NextRequest) {
   console.log("[v0] Middleware - host:", host, "pathname:", pathname)
 
   // Skip rewriting for internal paths
-  if (pathname.startsWith("/_sites") || pathname.startsWith("/api") || pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/sites") || pathname.startsWith("/api") || pathname.startsWith("/admin")) {
     console.log("[v0] Middleware - internal path, updating session")
     const response = await updateSession(request)
     return response
@@ -81,13 +83,13 @@ export async function middleware(request: NextRequest) {
     return response
   }
 
-  // Tenant site routing - rewrite to /_sites/[domain] path
+  // Tenant site routing - rewrite to /sites/[domain] path
   if (tenantSlug) {
     // First update the session to handle auth cookies
     const sessionResponse = await updateSession(request)
     
     const url = request.nextUrl.clone()
-    url.pathname = `/_sites/${tenantSlug}${pathname}`
+    url.pathname = `/sites/${tenantSlug}${pathname}`
     
     const response = NextResponse.rewrite(url, {
       request,
