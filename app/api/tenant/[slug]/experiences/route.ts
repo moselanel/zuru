@@ -27,7 +27,7 @@ export async function GET(
   // Get published experiences for this tenant
   const { data: experiences, error } = await supabase
     .from("experiences")
-    .select("id, slug, name, short_description, description, hero_image_url, gallery_urls, category, duration, duration_hours, difficulty, group_size_min, group_size_max, price_from, price_currency, price_includes, price_excludes, highlights, requirements, what_to_bring, is_featured, sort_order")
+    .select("id, slug, name, short_description, description, hero_image_url, gallery, category, duration, difficulty, price_from, price_currency, included, excluded, highlights, is_featured, sort_order")
     .eq("tenant_id", tenant.id)
     .eq("is_published", true)
     .order("sort_order", { ascending: true })

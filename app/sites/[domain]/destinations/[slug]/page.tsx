@@ -40,14 +40,15 @@ export default function DestinationDetailPage() {
     if (!destination) return []
     const images: string[] = []
     if (destination.hero_image_url) images.push(destination.hero_image_url)
-    if (destination.gallery_urls && Array.isArray(destination.gallery_urls)) {
-      images.push(...destination.gallery_urls)
+    if (destination.gallery && Array.isArray(destination.gallery)) {
+      images.push(...destination.gallery)
     }
     return images
   }, [destination])
 
-  // Parse highlights
+  // Parse highlights and location from jsonb fields
   const highlights = destination?.highlights || []
+  const location = destination?.location || {}
 
   if (!destination) {
     return (
@@ -85,10 +86,10 @@ export default function DestinationDetailPage() {
               </Button>
             </Link>
             <div className="flex flex-wrap items-center gap-3 mb-3">
-              {destination.region && (
+              {location.region && (
                 <Badge className="bg-white/20 text-white border-white/30">
                   <MapPin className="mr-1 h-3 w-3" />
-                  {destination.region}{destination.country ? `, ${destination.country}` : ''}
+                  {location.region}
                 </Badge>
               )}
               {destination.is_featured && (
@@ -176,14 +177,12 @@ export default function DestinationDetailPage() {
                       </div>
                     )}
 
-                    {(destination.region || destination.country) && (
+                    {location.region && (
                       <div className="flex items-start gap-3">
                         <Compass className="h-5 w-5 text-muted-foreground mt-0.5" />
                         <div>
                           <p className="text-sm text-muted-foreground">Location</p>
-                          <p className="font-medium">
-                            {[destination.region, destination.country].filter(Boolean).join(', ')}
-                          </p>
+                          <p className="font-medium">{location.region}</p>
                         </div>
                       </div>
                     )}
@@ -220,13 +219,13 @@ export default function DestinationDetailPage() {
                   </div>
 
                   {/* Map Preview (if coordinates available) */}
-                  {destination.latitude && destination.longitude && (
+                  {location.lat && location.lng && (
                     <>
                       <Separator />
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-3">Location</p>
-                        <a 
-                          href={`https://www.google.com/maps?q=${destination.latitude},${destination.longitude}`}
+                        <a
+                          href={`https://www.google.com/maps?q=${location.lat},${location.lng}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block"

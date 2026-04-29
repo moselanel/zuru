@@ -83,8 +83,8 @@ export default function AccommodationDetailPage() {
     if (!accommodation) return []
     const images: string[] = []
     if (accommodation.hero_image_url) images.push(accommodation.hero_image_url)
-    if (accommodation.gallery_urls && Array.isArray(accommodation.gallery_urls)) {
-      images.push(...accommodation.gallery_urls)
+    if (accommodation.gallery && Array.isArray(accommodation.gallery)) {
+      images.push(...accommodation.gallery)
     }
     return images
   }, [accommodation])
@@ -265,25 +265,6 @@ export default function AccommodationDetailPage() {
                       </div>
                     </div>
 
-                    {accommodation.total_rooms && (
-                      <div className="flex items-center gap-3">
-                        <Bed className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm text-muted-foreground">Total Rooms</p>
-                          <p className="font-medium">{accommodation.total_rooms} rooms</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {accommodation.max_guests && (
-                      <div className="flex items-center gap-3">
-                        <Users className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm text-muted-foreground">Maximum Guests</p>
-                          <p className="font-medium">Up to {accommodation.max_guests} guests</p>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   <Separator />
@@ -294,9 +275,7 @@ export default function AccommodationDetailPage() {
                     <p className="font-bold text-3xl" style={{ color: tenant.primary_color }}>
                       {formatPrice(accommodation.price_from, accommodation.price_currency)}
                     </p>
-                    <p className="text-sm text-muted-foreground">
-                      per {accommodation.price_per || 'night'}
-                    </p>
+                    <p className="text-sm text-muted-foreground">per night</p>
                   </div>
 
                   <Separator />
@@ -324,32 +303,32 @@ export default function AccommodationDetailPage() {
                   </div>
 
                   {/* Contact */}
-                  {(accommodation.contact_phone || accommodation.contact_email || accommodation.website_url) && (
+                  {(accommodation.contact?.phone || accommodation.contact?.email || accommodation.contact?.website) && (
                     <>
                       <Separator />
                       <div className="space-y-3">
                         <p className="text-sm font-medium text-muted-foreground">Direct Contact</p>
-                        {accommodation.contact_phone && (
-                          <a 
-                            href={`tel:${accommodation.contact_phone}`}
+                        {accommodation.contact?.phone && (
+                          <a
+                            href={`tel:${accommodation.contact.phone}`}
                             className="flex items-center gap-2 text-sm hover:underline"
                           >
                             <Phone className="h-4 w-4" />
-                            {accommodation.contact_phone}
+                            {accommodation.contact.phone}
                           </a>
                         )}
-                        {accommodation.contact_email && (
-                          <a 
-                            href={`mailto:${accommodation.contact_email}`}
+                        {accommodation.contact?.email && (
+                          <a
+                            href={`mailto:${accommodation.contact.email}`}
                             className="flex items-center gap-2 text-sm hover:underline"
                           >
                             <Mail className="h-4 w-4" />
-                            {accommodation.contact_email}
+                            {accommodation.contact.email}
                           </a>
                         )}
-                        {accommodation.website_url && (
-                          <a 
-                            href={accommodation.website_url}
+                        {accommodation.contact?.website && (
+                          <a
+                            href={accommodation.contact.website}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex items-center gap-2 text-sm hover:underline"

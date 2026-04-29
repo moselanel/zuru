@@ -54,16 +54,16 @@ export default function ExperienceDetailPage() {
     if (!experience) return []
     const images: string[] = []
     if (experience.hero_image_url) images.push(experience.hero_image_url)
-    if (experience.gallery_urls && Array.isArray(experience.gallery_urls)) {
-      images.push(...experience.gallery_urls)
+    if (experience.gallery && Array.isArray(experience.gallery)) {
+      images.push(...experience.gallery)
     }
     return images
   }, [experience])
 
   // Parse JSON arrays safely
   const highlights = experience?.highlights || []
-  const requirements = experience?.requirements || []
-  const whatToBring = experience?.what_to_bring || []
+  const included = experience?.included || []
+  const excluded = experience?.excluded || []
 
   if (!experience) {
     return (
@@ -165,9 +165,9 @@ export default function ExperienceDetailPage() {
               )}
 
               {/* What's Included / Excluded */}
-              {(experience.price_includes || experience.price_excludes) && (
+              {(included.length > 0 || excluded.length > 0) && (
                 <div className="grid gap-6 md:grid-cols-2">
-                  {experience.price_includes && (
+                  {included.length > 0 && (
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-green-700">
@@ -176,13 +176,18 @@ export default function ExperienceDetailPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground whitespace-pre-line">
-                          {experience.price_includes}
-                        </p>
+                        <ul className="space-y-1">
+                          {included.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                              <CheckCircle2 className="h-4 w-4 mt-0.5 text-green-600 flex-shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </CardContent>
                     </Card>
                   )}
-                  {experience.price_excludes && (
+                  {excluded.length > 0 && (
                     <Card>
                       <CardHeader>
                         <CardTitle className="flex items-center gap-2 text-red-700">
@@ -191,57 +196,18 @@ export default function ExperienceDetailPage() {
                         </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground whitespace-pre-line">
-                          {experience.price_excludes}
-                        </p>
+                        <ul className="space-y-1">
+                          {excluded.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                              <XCircle className="h-4 w-4 mt-0.5 text-red-500 flex-shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </CardContent>
                     </Card>
                   )}
                 </div>
-              )}
-
-              {/* Requirements */}
-              {requirements.length > 0 && (
-                <Card className="border-amber-200 bg-amber-50/50">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-amber-800">
-                      <AlertTriangle className="h-5 w-5" />
-                      Requirements & Restrictions
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {requirements.map((req: string, index: number) => (
-                        <li key={index} className="flex items-start gap-3 text-amber-900">
-                          <span className="text-amber-600">•</span>
-                          <span>{req}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* What to Bring */}
-              {whatToBring.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Backpack className="h-5 w-5" style={{ color: tenant.primary_color }} />
-                      What to Bring
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="grid gap-2 sm:grid-cols-2">
-                      {whatToBring.map((item: string, index: number) => (
-                        <li key={index} className="flex items-center gap-2">
-                          <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
               )}
             </div>
 
@@ -259,22 +225,6 @@ export default function ExperienceDetailPage() {
                       </div>
                     </div>
                     
-                    {(experience.group_size_min || experience.group_size_max) && (
-                      <div className="flex items-center gap-3">
-                        <Users className="h-5 w-5 text-muted-foreground" />
-                        <div>
-                          <p className="text-sm text-muted-foreground">Group Size</p>
-                          <p className="font-medium">
-                            {experience.group_size_min && experience.group_size_max 
-                              ? `${experience.group_size_min} - ${experience.group_size_max} people`
-                              : experience.group_size_max 
-                                ? `Up to ${experience.group_size_max} people`
-                                : `Min ${experience.group_size_min} people`
-                            }
-                          </p>
-                        </div>
-                      </div>
-                    )}
 
                     {difficultyInfo && (
                       <div className="flex items-center gap-3">
