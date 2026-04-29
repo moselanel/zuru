@@ -1,16 +1,27 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTenant } from "@/lib/tenant/context"
 import { formatPrice } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { ArrowLeft, Star, Calendar, Share2, Bed } from "lucide-react"
+import { ArrowLeft, Star, Calendar, Share2, Bed, Wifi, UtensilsCrossed, Car, Waves, Dumbbell, Wind } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import { ImageGallery } from "@/components/tenant/image-gallery"
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
+
+const amenityIcons: Record<string, React.ElementType> = {
+  wifi: Wifi,
+  restaurant: UtensilsCrossed,
+  parking: Car,
+  pool: Waves,
+  gym: Dumbbell,
+  spa: Wind,
+}
 
 export default function AccommodationDetailPage() {
   const tenant = useTenant()
@@ -20,6 +31,17 @@ export default function AccommodationDetailPage() {
 
   const { data: accommodations } = useSWR(`/api/tenant/${domain}/accommodations`, fetcher)
   const accommodation = accommodations?.find((a: any) => a.slug === slug)
+
+  // Build gallery images array
+  const galleryImages = useMemo(() => {
+    if (!accommodation) return []
+    const images: string[] = []
+    if (accommodation.hero_image_url) images.push(accommodation.hero_image_url)
+    if (accommodation.gallery_urls && Array.isArray(accommodation.gallery_urls)) {
+      images.push(...accommodation.gallery_urls)
+    }
+    return images
+  }, [accommodation])
 
   if (!accommodation) {
     return (
@@ -77,15 +99,40 @@ export default function AccommodationDetailPage() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 lg:grid-cols-3">
-            <div className="lg:col-span-2">
-              <p className="text-xl text-muted-foreground mb-8">
-                {accommodation.short_description}
-              </p>
-              <div className="prose prose-lg max-w-none">
-                <p className="text-foreground leading-relaxed whitespace-pre-line">
-                  {accommodation.description}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Gallery */}
+              {galleryImages.length > 1 && (
+                <ImageGallery images={galleryImages} alt={accommodation.name} />
+              )}
+
+              <div>
+                <p className="text-xl text-muted-foreground mb-6">
+                  {accommodation.short_description}
                 </p>
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-foreground leading-relaxed whitespace-pre-line">
+                    {accommodation.description}
+                  </p>
+                </div>
               </div>
+
+              {/* Amenities */}
+              {accommodation.amenities && accommodation.amenities.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Amenities</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {accommodation.amenities.map((amenity: string) => {
+                      const IconComponent = amenityIcons[amenity.toLowerCase()] || Wifi
+                      return (
+                        <Badge key={amenity} variant="secondary" className="gap-2 py-2 px-3">
+                          <IconComponent className="h-4 w-4" />
+                          {amenity}
+                        </Badge>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div>

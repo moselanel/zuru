@@ -1,8 +1,11 @@
 "use client"
 
+import { useState, useMemo } from "react"
 import { useTenant } from "@/lib/tenant/context"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Search } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
@@ -13,8 +16,20 @@ export default function DestinationsPage() {
   const tenant = useTenant()
   const params = useParams()
   const domain = params.domain as string
+  const [searchQuery, setSearchQuery] = useState("")
 
   const { data: destinations, isLoading } = useSWR(`/api/tenant/${domain}/destinations`, fetcher)
+
+  // Filter destinations by search
+  const filteredDestinations = useMemo(() => {
+    if (!destinations) return []
+    if (!searchQuery) return destinations
+    const query = searchQuery.toLowerCase()
+    return destinations.filter((d: any) =>
+      d.name.toLowerCase().includes(query) ||
+      d.short_description?.toLowerCase().includes(query)
+    )
+  }, [destinations, searchQuery])
 
   return (
     <div className="bg-background">
@@ -34,6 +49,24 @@ export default function DestinationsPage() {
       {/* Destinations Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          {/* Search */}
+          {!isLoading && destinations?.length > 0 && (
+            <div className="mb-8">
+              <div className="relative max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search destinations..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9"
+                />
+              </div>
+              <p className="text-sm text-muted-foreground mt-3">
+                Showing {filteredDestinations.length} of {destinations.length} destinations
+              </p>
+            </div>
+          )}
+
           {isLoading ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -46,9 +79,9 @@ export default function DestinationsPage() {
                 </Card>
               ))}
             </div>
-          ) : destinations?.length > 0 ? (
+          ) : filteredDestinations.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {destinations.map((destination: any) => (
+              {filteredDestinations.map((destination: any) => (
                 <Link key={destination.id} href={`/destinations/${destination.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg h-full">
                     <div className="relative h-48 overflow-hidden">
@@ -77,6 +110,10 @@ export default function DestinationsPage() {
                   </Card>
                 </Link>
               ))}
+            </div>
+          ) : destinations?.length > 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No destinations match your search.</p>
             </div>
           ) : (
             <div className="text-center py-12">

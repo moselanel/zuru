@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo } from "react"
 import { useTenant } from "@/lib/tenant/context"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -7,6 +8,7 @@ import { ArrowLeft, MapPin, Share2 } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import { ImageGallery } from "@/components/tenant/image-gallery"
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -18,6 +20,17 @@ export default function DestinationDetailPage() {
 
   const { data: destinations } = useSWR(`/api/tenant/${domain}/destinations`, fetcher)
   const destination = destinations?.find((d: any) => d.slug === slug)
+
+  // Build gallery images array
+  const galleryImages = useMemo(() => {
+    if (!destination) return []
+    const images: string[] = []
+    if (destination.hero_image_url) images.push(destination.hero_image_url)
+    if (destination.gallery_urls && Array.isArray(destination.gallery_urls)) {
+      images.push(...destination.gallery_urls)
+    }
+    return images
+  }, [destination])
 
   if (!destination) {
     return (
@@ -69,14 +82,21 @@ export default function DestinationDetailPage() {
       {/* Content */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-3xl">
-            <p className="text-xl text-muted-foreground mb-8">
-              {destination.short_description}
-            </p>
-            <div className="prose prose-lg max-w-none">
-              <p className="text-foreground leading-relaxed whitespace-pre-line">
-                {destination.description}
+          <div className="max-w-3xl space-y-8">
+            {/* Gallery */}
+            {galleryImages.length > 1 && (
+              <ImageGallery images={galleryImages} alt={destination.name} />
+            )}
+
+            <div>
+              <p className="text-xl text-muted-foreground mb-6">
+                {destination.short_description}
               </p>
+              <div className="prose prose-lg max-w-none">
+                <p className="text-foreground leading-relaxed whitespace-pre-line">
+                  {destination.description}
+                </p>
+              </div>
             </div>
 
             <div className="mt-12 flex flex-wrap gap-4">

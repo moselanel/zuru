@@ -27,7 +27,7 @@ export async function GET(
   // Get published destinations for this tenant
   const { data: destinations, error } = await supabase
     .from("destinations")
-    .select("id, slug, name, short_description, description, hero_image_url, is_featured, sort_order")
+    .select("id, slug, name, short_description, description, hero_image_url, gallery_urls, latitude, longitude, is_featured, sort_order")
     .eq("tenant_id", tenant.id)
     .eq("is_published", true)
     .order("sort_order", { ascending: true })

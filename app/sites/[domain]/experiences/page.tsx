@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useMemo } from "react"
 import { useTenant } from "@/lib/tenant/context"
 import { formatPrice } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
@@ -8,6 +9,7 @@ import { Clock } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import { ListingFilters, applyFilters, type FilterConfig } from "@/components/tenant/listing-filters"
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -15,8 +17,22 @@ export default function ExperiencesPage() {
   const tenant = useTenant()
   const params = useParams()
   const domain = params.domain as string
+  const [filters, setFilters] = useState<FilterConfig>({})
 
   const { data: experiences, isLoading } = useSWR(`/api/tenant/${domain}/experiences`, fetcher)
+
+  // Extract unique categories
+  const categories = useMemo(() => {
+    if (!experiences) return []
+    const cats = [...new Set(experiences.map((e: any) => e.category).filter(Boolean))]
+    return cats as string[]
+  }, [experiences])
+
+  // Apply filters
+  const filteredExperiences = useMemo(() => {
+    if (!experiences) return []
+    return applyFilters(experiences, filters)
+  }, [experiences, filters])
 
   return (
     <div className="bg-background">
@@ -33,9 +49,28 @@ export default function ExperiencesPage() {
         </div>
       </section>
 
-      {/* Experiences Grid */}
+      {/* Filters + Experiences Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          {/* Filters */}
+          {!isLoading && experiences?.length > 0 && (
+            <ListingFilters
+              filters={filters}
+              onFilterChange={setFilters}
+              categories={categories}
+              showPrice={true}
+              className="mb-8"
+              accentColor={tenant.primary_color}
+            />
+          )}
+
+          {/* Results count */}
+          {!isLoading && experiences?.length > 0 && (
+            <p className="text-sm text-muted-foreground mb-6">
+              Showing {filteredExperiences.length} of {experiences.length} experiences
+            </p>
+          )}
+
           {isLoading ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -48,9 +83,9 @@ export default function ExperiencesPage() {
                 </Card>
               ))}
             </div>
-          ) : experiences?.length > 0 ? (
+          ) : filteredExperiences.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {experiences.map((experience: any) => (
+              {filteredExperiences.map((experience: any) => (
                 <Link key={experience.id} href={`/experiences/${experience.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg h-full">
                     <div className="relative h-48 overflow-hidden">
@@ -86,6 +121,10 @@ export default function ExperiencesPage() {
                   </Card>
                 </Link>
               ))}
+            </div>
+          ) : experiences?.length > 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">No experiences match your filters.</p>
             </div>
           ) : (
             <div className="text-center py-12">
