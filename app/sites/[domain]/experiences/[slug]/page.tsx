@@ -7,22 +7,18 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
-import { 
-  ArrowLeft, 
-  Clock, 
-  DollarSign, 
-  Calendar, 
-  Share2, 
-  Gauge, 
-  Users, 
-  CheckCircle2, 
-  XCircle, 
+import {
+  ArrowLeft,
+  Clock,
+  Calendar,
+  Share2,
+  Gauge,
+  Users,
+  CheckCircle2,
+  XCircle,
   Backpack,
   AlertTriangle,
   Sparkles,
-  Baby,
-  Accessibility,
-  Leaf,
   Heart
 } from "lucide-react"
 import Link from "next/link"
@@ -64,6 +60,8 @@ export default function ExperienceDetailPage() {
   const highlights = experience?.highlights || []
   const included = experience?.included || []
   const excluded = experience?.excluded || []
+  const requirements = experience?.requirements || []
+  const whatToBring = experience?.what_to_bring || []
 
   if (!experience) {
     return (
@@ -209,6 +207,52 @@ export default function ExperienceDetailPage() {
                   )}
                 </div>
               )}
+
+              {/* Requirements & What to Bring */}
+              {(requirements.length > 0 || whatToBring.length > 0) && (
+                <div className="grid gap-6 md:grid-cols-2">
+                  {requirements.length > 0 && (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-orange-700">
+                          <AlertTriangle className="h-5 w-5" />
+                          Requirements &amp; Restrictions
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-1">
+                          {requirements.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                              <AlertTriangle className="h-4 w-4 mt-0.5 text-orange-500 flex-shrink-0" />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  )}
+                  {whatToBring.length > 0 && (
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                          <Backpack className="h-5 w-5" style={{ color: tenant.primary_color }} />
+                          What to Bring
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <ul className="space-y-1">
+                          {whatToBring.map((item: string, index: number) => (
+                            <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                              <CheckCircle2 className="h-4 w-4 mt-0.5 flex-shrink-0" style={{ color: tenant.primary_color }} />
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </CardContent>
+                    </Card>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Sidebar */}
@@ -224,7 +268,22 @@ export default function ExperienceDetailPage() {
                         <p className="font-medium">{experience.duration}</p>
                       </div>
                     </div>
-                    
+
+                    {(experience.group_size_min || experience.group_size_max) && (
+                      <div className="flex items-center gap-3">
+                        <Users className="h-5 w-5 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Group Size</p>
+                          <p className="font-medium">
+                            {experience.group_size_min && experience.group_size_max
+                              ? `${experience.group_size_min}–${experience.group_size_max} people`
+                              : experience.group_size_max
+                              ? `Up to ${experience.group_size_max} people`
+                              : `From ${experience.group_size_min} people`}
+                          </p>
+                        </div>
+                      </div>
+                    )}
 
                     {difficultyInfo && (
                       <div className="flex items-center gap-3">

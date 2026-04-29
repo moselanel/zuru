@@ -27,7 +27,7 @@ export async function GET(
   // Get published accommodations for this tenant
   const { data: accommodations, error } = await supabase
     .from("accommodations")
-    .select("id, slug, name, short_description, description, hero_image_url, gallery, category, star_rating, price_from, price_currency, amenities, room_types, location, contact, is_featured, sort_order")
+    .select("id, slug, name, short_description, description, hero_image_url, gallery, category, star_rating, price_from, price_currency, amenities, room_types, total_rooms, max_guests, location, contact, is_featured, sort_order")
     .eq("tenant_id", tenant.id)
     .eq("is_published", true)
     .order("sort_order", { ascending: true })

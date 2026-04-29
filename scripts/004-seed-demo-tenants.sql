@@ -147,87 +147,161 @@ ON CONFLICT (tenant_id, slug) DO UPDATE SET
 -- SOUTH AFRICA — EXPERIENCES
 -- ============================================
 
-INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, is_published, is_featured, sort_order)
+INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, highlights, included, excluded, requirements, what_to_bring, group_size_min, group_size_max, is_published, is_featured, sort_order)
 VALUES
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'big-five-safari', 'Big Five Safari Drive',
    'Experience the thrill of spotting Africa''s Big Five in their natural habitat.',
    'Join expert rangers on an unforgettable game drive through Kruger National Park. Our experienced guides know the best spots to find lions, leopards, elephants, rhinos, and buffalos. Morning and sunset drives available with refreshments included.',
    'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200',
-   'safari', '4 hours', 'easy', 1500, 'USD', true, true, 1),
+   'safari', '4 hours', 'easy', 1500, 'USD',
+   '["Spot the iconic Big Five", "Expert ranger-guided tracking", "Morning and magical sunset drives available", "Refreshments included throughout"]'::jsonb,
+   '["Game drive fees", "Park entrance fee", "Professional ranger and tracker", "Refreshments and snacks"]'::jsonb,
+   '["Hotel transfers", "Gratuities", "Personal travel insurance", "Meals outside drive"]'::jsonb,
+   '["Minimum age: 6 years", "All fitness levels welcome", "Closed-toe shoes required in the vehicle"]'::jsonb,
+   '["Binoculars", "Camera with zoom lens", "Neutral-colored clothing", "Sun hat and sunscreen", "Insect repellent", "Water bottle"]'::jsonb,
+   2, 8, true, true, 1),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'panorama-route', 'Panorama Route Adventure',
    'A full-day tour of Mpumalanga''s most spectacular viewpoints and natural wonders.',
    'Discover the breathtaking Panorama Route including God''s Window, Bourke''s Luck Potholes, the Three Rondavels, and more. Professional guide, comfortable transport, and lunch at a local restaurant included.',
    'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200',
-   'adventure', '8 hours', 'easy', 1200, 'USD', true, true, 2),
+   'adventure', '8 hours', 'easy', 1200, 'USD',
+   '["God''s Window panoramic views to Mozambique", "Bourke''s Luck Potholes geological wonder", "Three Rondavels viewpoint", "Lunch at a local restaurant included"]'::jsonb,
+   '["Professional guide", "Air-conditioned transport", "Lunch", "All park and site fees"]'::jsonb,
+   '["Hotel pickup/drop-off", "Gratuities", "Personal shopping", "Travel insurance"]'::jsonb,
+   '["Minimum age: 5 years", "Moderate walking ability required", "Not suitable for wheelchairs at all sites"]'::jsonb,
+   '["Comfortable walking shoes", "Camera", "Sun hat", "Water bottle", "Light jacket"]'::jsonb,
+   2, 12, true, true, 2),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'balloon-safari', 'Hot Air Balloon Safari',
    'Float silently over the African bush at sunrise for a unique wildlife viewing experience.',
    'Experience the magic of a hot air balloon flight over the spectacular landscapes of Mpumalanga. Watch the sunrise over the bushveld, spot wildlife from above, and end with a champagne breakfast. An unforgettable experience.',
    'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=1200',
-   'adventure', '4 hours', 'easy', 4500, 'USD', true, true, 3),
+   'adventure', '4 hours', 'easy', 4500, 'USD',
+   '["Sunrise flight over the African bush", "Wildlife spotting from the air", "Champagne breakfast on landing", "Official certificate of flight"]'::jsonb,
+   '["Balloon flight (approx. 1 hour)", "Champagne breakfast", "Flight certificate", "Transport from meeting point"]'::jsonb,
+   '["Hotel accommodation", "Travel insurance", "Gratuities"]'::jsonb,
+   '["Minimum age: 12 years", "Weight limit: 120 kg per person", "Not suitable for pregnant women", "Not suitable for those with heart conditions or serious back problems", "Must be able to stand for up to 1 hour"]'::jsonb,
+   '["Warm jacket (cold at altitude before sunrise)", "Camera", "Comfortable closed shoes", "Sun protection"]'::jsonb,
+   2, 16, true, true, 3),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'chimp-eden', 'Chimpanzee Sanctuary Visit',
    'Meet rescued chimpanzees at the renowned Jane Goodall Institute sanctuary.',
    'Visit Chimp Eden, the only chimpanzee sanctuary in South Africa. Learn about chimpanzee conservation, observe rescued chimps in a natural environment, and support vital rehabilitation work. Educational guided tours available.',
    'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1200',
-   'safari', '2 hours', 'easy', 350, 'USD', true, false, 4),
+   'safari', '2 hours', 'easy', 350, 'USD',
+   '["Meet rescued and rehabilitated chimpanzees", "Conservation education talk", "Natural habitat viewing enclosures", "Directly supports Jane Goodall Institute"]'::jsonb,
+   '["Guided tour", "Entry fee", "Conservation presentation"]'::jsonb,
+   '["Transport", "Lunch", "Gratuities"]'::jsonb,
+   '["Minimum age: 8 years", "Quiet and calm behavior around animals required", "Photography allowed"]'::jsonb,
+   '["Camera", "Comfortable shoes", "Sunscreen"]'::jsonb,
+   1, 20, true, false, 4),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'white-water-rafting', 'White Water Rafting',
    'Tackle exciting rapids on the Blyde or Sabie Rivers with experienced guides.',
    'Get your adrenaline pumping with white water rafting on Mpumalanga''s scenic rivers. Choose from half-day or full-day trips suitable for beginners to experienced rafters. All safety equipment and professional guides provided.',
    'https://images.unsplash.com/photo-1504870712357-65ea720d6078?w=1200',
-   'adventure', '4 hours', 'moderate', 950, 'USD', true, false, 5)
+   'adventure', '4 hours', 'moderate', 950, 'USD',
+   '["Grade 2–4 rapids on scenic Mpumalanga rivers", "Swimming holes and river pools", "Professional safety guides throughout", "Half-day and full-day options available"]'::jsonb,
+   '["All safety equipment", "Wetsuit if needed", "Certified safety guides", "Light snack on return"]'::jsonb,
+   '["Transport to river", "Lunch", "Personal travel insurance"]'::jsonb,
+   '["Minimum age: 12 years", "Must be able to swim", "Moderate fitness required", "Not suitable for pregnant women"]'::jsonb,
+   '["Swimming costume", "Change of clothes and towel", "Secure footwear", "Waterproof camera optional"]'::jsonb,
+   4, 12, true, false, 5)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,
-  description       = EXCLUDED.description;
+  description       = EXCLUDED.description,
+  highlights        = EXCLUDED.highlights,
+  included          = EXCLUDED.included,
+  excluded          = EXCLUDED.excluded,
+  requirements      = EXCLUDED.requirements,
+  what_to_bring     = EXCLUDED.what_to_bring,
+  group_size_min    = EXCLUDED.group_size_min,
+  group_size_max    = EXCLUDED.group_size_max;
 
 -- ============================================
 -- RWANDA — EXPERIENCES
 -- ============================================
 
-INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, is_published, is_featured, sort_order)
+INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, highlights, included, excluded, requirements, what_to_bring, group_size_min, group_size_max, is_published, is_featured, sort_order)
 VALUES
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'gorilla-trekking', 'Mountain Gorilla Trek',
    'A once-in-a-lifetime encounter with endangered mountain gorillas in their natural habitat.',
    'Trek through the misty volcanic slopes of the Virunga Mountains to spend a magical hour with a habituated gorilla family. Permits are limited to protect these gentle giants. Includes park fees, guide, and porter services.',
    'https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=1200',
-   'safari', '6 hours', 'challenging', 1500, 'USD', true, true, 1),
+   'safari', '6 hours', 'challenging', 1500, 'USD',
+   '["One magical hour with a habituated gorilla family", "Misty volcanic mountain scenery", "Expert tracking and armed ranger escort", "Directly funds gorilla conservation"]'::jsonb,
+   '["Gorilla trekking permit", "Park entrance fee", "Armed ranger escort", "Porter service (optional, recommended)"]'::jsonb,
+   '["Accommodation", "Meals", "Travel insurance", "Porter and guide tips", "Transport to trailhead"]'::jsonb,
+   '["Minimum age: 15 years", "Moderate to good fitness — treks can last 2–8 hours", "No active respiratory infections (to protect gorillas)", "Maximum 8 visitors per gorilla group per day"]'::jsonb,
+   '["Sturdy hiking boots", "Long-sleeved shirt and long trousers", "Gardening gloves (thorny vegetation)", "Rain jacket", "2 liters of water", "Energy snacks", "Camera (no flash)"]'::jsonb,
+   1, 8, true, true, 1),
 
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'golden-monkey', 'Golden Monkey Tracking',
    'Track playful golden monkeys in the bamboo forests of Volcanoes National Park.',
    'The golden monkey is one of Africa''s rarest primates, found only in the Virunga Mountains. This less strenuous trek offers excellent wildlife photography opportunities and a chance to observe these beautiful, playful creatures.',
    'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1200',
-   'safari', '4 hours', 'moderate', 100, 'USD', true, true, 2),
+   'safari', '4 hours', 'moderate', 100, 'USD',
+   '["Rare endemic primate found only in the Virungas", "Playful behavior great for photography", "Bamboo forest habitat", "Less strenuous than gorilla trek"]'::jsonb,
+   '["Golden monkey permit", "Park entrance fee", "Expert guide"]'::jsonb,
+   '["Accommodation", "Meals", "Transport", "Guide tips"]'::jsonb,
+   '["Minimum age: 12 years", "Moderate fitness level", "No active illness to protect wildlife"]'::jsonb,
+   '["Hiking boots", "Long trousers", "Rain jacket", "Camera", "Water bottle"]'::jsonb,
+   1, 8, true, true, 2),
 
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'kigali-tour', 'Kigali City Tour',
    'Discover Rwanda''s vibrant capital, from historical sites to local markets and culture.',
    'Explore Kigali with a local guide. Visit the Genocide Memorial, explore the colorful Kimironko Market, see local arts at Inema Art Center, and sample Rwandan cuisine. A perfect introduction to Rwanda''s past, present, and future.',
    'https://images.unsplash.com/photo-1580746738099-04b72d5232b1?w=1200',
-   'cultural', '5 hours', 'easy', 80, 'USD', true, false, 3),
+   'cultural', '5 hours', 'easy', 80, 'USD',
+   '["Kigali Genocide Memorial — a moving tribute to history", "Kimironko Market — vibrant local colour and crafts", "Inema Art Center — Rwanda''s thriving contemporary art scene", "Authentic Rwandan cuisine tasting"]'::jsonb,
+   '["Local expert guide", "Genocide Memorial entry", "Art Center visit", "Lunch at a local restaurant"]'::jsonb,
+   '["Hotel pickup/drop-off", "Personal shopping", "Gratuities"]'::jsonb,
+   '["All ages welcome", "Comfortable walking shoes recommended", "Respectful attire for memorial visit"]'::jsonb,
+   '["Camera", "Comfortable walking shoes", "Light jacket", "Cash for market shopping"]'::jsonb,
+   1, 15, true, false, 3),
 
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'canopy-walk', 'Nyungwe Canopy Walk',
    'Walk among the treetops on East Africa''s only canopy walkway.',
    'Experience Nyungwe Forest from a unique perspective on the 200-meter canopy walkway suspended 50 meters above the forest floor. Combined with forest walks and possible chimpanzee tracking for a full rainforest experience.',
    'https://images.unsplash.com/photo-1448375240586-882707db888b?w=1200',
-   'adventure', '3 hours', 'moderate', 60, 'USD', true, true, 4),
+   'adventure', '3 hours', 'moderate', 60, 'USD',
+   '["200-meter walkway suspended 50 meters above the forest floor", "Possible chimpanzee tracking in the same area", "Over 300 bird species including Albertine Rift endemics", "One of the oldest and most biodiverse rainforests in Africa"]'::jsonb,
+   '["Park entry fee", "Licensed ranger guide", "Canopy walk permit"]'::jsonb,
+   '["Transport", "Accommodation", "Additional chimpanzee tracking permit"]'::jsonb,
+   '["Minimum age: 8 years", "Moderate fitness for forest trails", "Not suitable for those with severe acrophobia or vertigo"]'::jsonb,
+   '["Hiking boots", "Rain jacket", "Insect repellent", "Camera", "Water bottle"]'::jsonb,
+   1, 20, true, true, 4),
 
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'kivu-kayaking', 'Lake Kivu Kayaking',
    'Paddle the calm waters of Lake Kivu with stunning mountain scenery.',
    'Explore the beautiful shores of Lake Kivu by kayak. Paddle through fishing villages, visit small islands, and enjoy swimming breaks in the warm, bilharzia-free waters. Suitable for beginners, all equipment provided.',
    'https://images.unsplash.com/photo-1596005554384-d293674c91d7?w=1200',
-   'water', '3 hours', 'easy', 45, 'USD', true, false, 5)
+   'water', '3 hours', 'easy', 45, 'USD',
+   '["Paddle through traditional fishing villages", "Visit uninhabited lake islands", "Swimming breaks in bilharzia-free waters", "Stunning Congo-Nile mountain backdrop"]'::jsonb,
+   '["Kayak and all paddle equipment", "Life jacket", "Certified guide", "Swimming break time"]'::jsonb,
+   '["Transport to the lake", "Lunch", "Gratuities"]'::jsonb,
+   '["Minimum age: 8 years", "Basic swimming ability required", "Beginner friendly", "Not suitable for those with severe upper body injuries"]'::jsonb,
+   '["Swimwear", "Sunscreen", "Change of clothes", "Water bottle", "Waterproof bag for valuables"]'::jsonb,
+   2, 12, true, false, 5)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,
-  description       = EXCLUDED.description;
+  description       = EXCLUDED.description,
+  highlights        = EXCLUDED.highlights,
+  included          = EXCLUDED.included,
+  excluded          = EXCLUDED.excluded,
+  requirements      = EXCLUDED.requirements,
+  what_to_bring     = EXCLUDED.what_to_bring,
+  group_size_min    = EXCLUDED.group_size_min,
+  group_size_max    = EXCLUDED.group_size_max;
 
 -- ============================================
 -- SOUTH AFRICA — ACCOMMODATIONS
 -- ============================================
 
-INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, location, price_from, price_currency, is_published, is_featured, sort_order)
+INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, room_types, total_rooms, max_guests, location, price_from, price_currency, is_published, is_featured, sort_order)
 VALUES
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'kruger-gate-hotel', 'Kruger Gate Hotel',
    'Luxury safari lodge at the doorstep of Kruger National Park.',
@@ -235,6 +309,8 @@ VALUES
    'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200',
    'lodge', 5,
    '["Pool", "Spa", "Restaurant", "WiFi", "Game Drives", "Bar", "Room Service", "Concierge"]'::jsonb,
+   '[{"name":"Standard Safari Room","description":"Spacious room with private balcony overlooking the bush, twin or king beds"},{"name":"Deluxe Bush Suite","description":"Larger suite with lounge area, outdoor shower, and premium bush views"},{"name":"Presidential Villa","description":"Private villa with plunge pool, butler service, and panoramic Kruger views"}]'::jsonb,
+   45, 90,
    '{"address": "Paul Kruger Gate Road, Skukuza", "lat": -25.0183, "lng": 31.4853}'::jsonb,
    3500, 'USD', true, true, 1),
 
@@ -244,6 +320,8 @@ VALUES
    'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200',
    'lodge', 4,
    '["Pool", "Spa", "Restaurant", "WiFi", "Hiking", "Bar", "Mountain Views"]'::jsonb,
+   '[{"name":"Canyon Suite","description":"Cliff-edge suite with private deck and floor-to-ceiling canyon views"},{"name":"Luxury Suite","description":"Spacious suite with outdoor shower and direct trail access"},{"name":"Honeymoon Suite","description":"Romantic suite with private plunge pool and fireplace"}]'::jsonb,
+   16, 32,
    '{"address": "Blyde River Canyon Road", "lat": -24.5834, "lng": 30.8181}'::jsonb,
    2800, 'USD', true, true, 2),
 
@@ -253,6 +331,8 @@ VALUES
    'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200',
    'camp', 3,
    '["Restaurant", "Bar", "Bird Watching", "Nature Walks", "River Views"]'::jsonb,
+   '[{"name":"Luxury Safari Tent","description":"En-suite tent with private deck over the river, king bed and outdoor shower"},{"name":"Family Tent","description":"Larger tent with two bedrooms and shared lounge, sleeps up to 4"}]'::jsonb,
+   10, 22,
    '{"address": "Sabie River Valley", "lat": -25.1019, "lng": 30.7811}'::jsonb,
    1500, 'USD', true, false, 3),
 
@@ -262,18 +342,24 @@ VALUES
    'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200',
    'guesthouse', 3,
    '["Restaurant", "Bar", "WiFi", "Historic", "Garden"]'::jsonb,
+   '[{"name":"Standard Room","description":"Cozy Victorian-style room with period furniture and garden views"},{"name":"Heritage Suite","description":"Larger suite in the original 1880s building with authentic gold-rush era décor"}]'::jsonb,
+   20, 40,
    '{"address": "Main Street, Pilgrim''s Rest", "lat": -24.8938, "lng": 30.7543}'::jsonb,
    950, 'USD', true, false, 4)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,
-  description       = EXCLUDED.description;
+  description       = EXCLUDED.description,
+  amenities         = EXCLUDED.amenities,
+  room_types        = EXCLUDED.room_types,
+  total_rooms       = EXCLUDED.total_rooms,
+  max_guests        = EXCLUDED.max_guests;
 
 -- ============================================
 -- RWANDA — ACCOMMODATIONS
 -- ============================================
 
-INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, location, price_from, price_currency, is_published, is_featured, sort_order)
+INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, room_types, total_rooms, max_guests, location, price_from, price_currency, is_published, is_featured, sort_order)
 VALUES
   ('a010c87c-2bd9-41d3-a692-38634d2e1343', 'bisate-lodge', 'Bisate Lodge',
    'Ultra-luxury eco-lodge with views of the Virunga volcanoes and gorilla territory.',
@@ -281,6 +367,8 @@ VALUES
    'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200',
    'lodge', 5,
    '["Spa", "Restaurant", "WiFi", "Gorilla Trekking", "Volcano Views", "Fireplace", "Butler Service"]'::jsonb,
+   '[{"name":"Forest Villa","description":"Individual two-storey villa with fireplace, outdoor rain shower, and panoramic volcano views. Sleeps 2."}]'::jsonb,
+   6, 12,
    '{"address": "Volcanoes National Park", "lat": -1.4574, "lng": 29.5360}'::jsonb,
    2500, 'USD', true, true, 1),
 
@@ -290,6 +378,8 @@ VALUES
    'https://images.unsplash.com/photo-1551882547-ff40c63fe2e2?w=1200',
    'hotel', 5,
    '["Pool", "Spa", "Restaurant", "WiFi", "Bar", "City Views", "Gym"]'::jsonb,
+   '[{"name":"Superior Room","description":"Elegant room with city views, king bed and contemporary African décor"},{"name":"Deluxe Suite","description":"Spacious suite with private lounge, terrace, and panoramic Kigali views"},{"name":"Penthouse Suite","description":"Top-floor suite with wrap-around terrace and butler service"}]'::jsonb,
+   14, 28,
    '{"address": "Kiyovu, Kigali", "lat": -1.9503, "lng": 29.8739}'::jsonb,
    450, 'USD', true, true, 2),
 
@@ -299,6 +389,8 @@ VALUES
    'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200',
    'hotel', 4,
    '["Pool", "Spa", "Restaurant", "WiFi", "Beach", "Water Sports", "Tennis"]'::jsonb,
+   '[{"name":"Superior Room","description":"Comfortable room with partial lake views and en-suite bathroom"},{"name":"Deluxe Lake View","description":"Spacious room with private balcony and unobstructed Lake Kivu panorama"},{"name":"Executive Suite","description":"Large suite with separate lounge, private terrace, and premium lake views"}]'::jsonb,
+   48, 96,
    '{"address": "Gisenyi Beach, Lake Kivu", "lat": -1.7000, "lng": 29.2567}'::jsonb,
    280, 'USD', true, true, 3),
 
@@ -308,12 +400,18 @@ VALUES
    'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1200',
    'lodge', 4,
    '["Restaurant", "WiFi", "Forest Walks", "Tea Tours", "Bird Watching"]'::jsonb,
+   '[{"name":"Garden Room","description":"Comfortable room with views of the tea plantation gardens"},{"name":"Forest View Room","description":"Room with private veranda overlooking the Nyungwe Forest canopy"},{"name":"Forest Suite","description":"Spacious suite with living area, fireplace, and sweeping forest views"}]'::jsonb,
+   22, 44,
    '{"address": "Gisakura, Nyungwe", "lat": -2.4000, "lng": 29.2000}'::jsonb,
    320, 'USD', true, false, 4)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,
-  description       = EXCLUDED.description;
+  description       = EXCLUDED.description,
+  amenities         = EXCLUDED.amenities,
+  room_types        = EXCLUDED.room_types,
+  total_rooms       = EXCLUDED.total_rooms,
+  max_guests        = EXCLUDED.max_guests;
 
 -- ============================================
 -- SAMPLE ENQUIRIES
