@@ -117,8 +117,8 @@
 }
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
-  --font-serif: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", Georgia, serif;
+  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
+  --font-serif: var(--font-plus-jakarta), Georgia, serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
   
   /* Zuru brand colors */
