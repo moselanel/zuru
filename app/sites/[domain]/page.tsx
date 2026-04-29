@@ -28,20 +28,17 @@ export default function TenantHomePage() {
   return (
     <div className="bg-background">
       {/* Hero Section */}
-      <section 
-        className="relative min-h-[70vh] flex items-center justify-center"
-        style={{
-          background: `linear-gradient(to bottom, ${tenant.primary_color}dd, ${tenant.primary_color}99)`,
-        }}
-      >
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center scale-105"
           style={{
-            backgroundImage: featuredDestinations[0]?.hero_image_url 
+            backgroundImage: featuredDestinations[0]?.hero_image_url
               ? `url(${featuredDestinations[0].hero_image_url})`
-              : `url(https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920)`,
+              : `url(https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1920)`,
           }}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom, ${tenant.primary_color}44, ${tenant.primary_color}88)` }} />
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <Badge className="mb-4 bg-white/20 text-white border-white/30">
             Welcome to {tenant.name}

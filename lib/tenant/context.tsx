@@ -60,7 +60,7 @@ export function useTenant() {
   if (!context) {
     throw new Error("useTenant must be used within a TenantProvider")
   }
-  return context
+  return context.tenant as Tenant
 }
 
 // Helper to get CSS variables for tenant theming

@@ -34,13 +34,16 @@ export default function DestinationsPage() {
   return (
     <div className="bg-background">
       {/* Hero */}
-      <section 
-        className="py-20"
-        style={{ background: `linear-gradient(to right, ${tenant.primary_color}, ${tenant.secondary_color || tenant.primary_color})` }}
-      >
-        <div className="container mx-auto px-4 text-center text-white">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Destinations</h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+      <section className="relative h-72 md:h-96 flex items-end overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center scale-105"
+          style={{ backgroundImage: `url(https://images.unsplash.com/photo-1534177616064-ef1fc6fb4032?w=1920)` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${tenant.primary_color}cc 0%, transparent 60%)` }} />
+        <div className="relative z-10 container mx-auto px-4 pb-12 text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2">Destinations</h1>
+          <p className="text-lg text-white/90 max-w-2xl">
             Explore the incredible places that make {tenant.name} unforgettable
           </p>
         </div>
