@@ -42,7 +42,7 @@ INSERT INTO tenants (
   'visitrwanda',
   'Rwanda Development Board - Tourism',
   '#00A8E8', '#FFD700',
-  'RWF', 'Africa/Kigali',
+  'USD', 'Africa/Kigali',
   'safari', 'active',
   10, 100, 5, 6,
   'info@visitrwanda.com', '+250 252 576 514',
