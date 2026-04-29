@@ -1,6 +1,7 @@
 "use client"
 
 import { useTenant } from "@/lib/tenant/context"
+import { formatPrice } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -101,7 +102,7 @@ export default function AccommodationDetailPage() {
                     <div>
                       <p className="text-sm text-muted-foreground">Price From</p>
                       <p className="font-medium text-2xl">
-                        {accommodation.price_currency} {accommodation.price_from?.toLocaleString()}
+                        {formatPrice(accommodation.price_from, accommodation.price_currency)}
                         <span className="text-sm font-normal text-muted-foreground">/night</span>
                       </p>
                     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useTenant } from "@/lib/tenant/context"
+import { formatPrice } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Clock } from "lucide-react"
@@ -78,7 +79,7 @@ export default function ExperiencesPage() {
                           {experience.duration}
                         </span>
                         <span className="font-semibold text-foreground">
-                          From {experience.price_currency} {experience.price_from?.toLocaleString()}
+                          From {formatPrice(experience.price_from, experience.price_currency)}
                         </span>
                       </div>
                     </CardContent>

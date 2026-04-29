@@ -18,7 +18,7 @@ INSERT INTO tenants (
   'southafrica',
   'South African Tourism',
   '#006B3F', '#FFB612',
-  'ZAR', 'Africa/Johannesburg',
+  'USD', 'Africa/Johannesburg',
   'safari', 'active',
   10, 100, 5, 6,
   'info@southafrica.net', '+27 11 895 3000',
@@ -153,31 +153,31 @@ VALUES
    'Experience the thrill of spotting Africa''s Big Five in their natural habitat.',
    'Join expert rangers on an unforgettable game drive through Kruger National Park. Our experienced guides know the best spots to find lions, leopards, elephants, rhinos, and buffalos. Morning and sunset drives available with refreshments included.',
    'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1200',
-   'safari', '4 hours', 'easy', 1500, 'ZAR', true, true, 1),
+   'safari', '4 hours', 'easy', 1500, 'USD', true, true, 1),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'panorama-route', 'Panorama Route Adventure',
    'A full-day tour of Mpumalanga''s most spectacular viewpoints and natural wonders.',
    'Discover the breathtaking Panorama Route including God''s Window, Bourke''s Luck Potholes, the Three Rondavels, and more. Professional guide, comfortable transport, and lunch at a local restaurant included.',
    'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=1200',
-   'adventure', '8 hours', 'easy', 1200, 'ZAR', true, true, 2),
+   'adventure', '8 hours', 'easy', 1200, 'USD', true, true, 2),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'balloon-safari', 'Hot Air Balloon Safari',
    'Float silently over the African bush at sunrise for a unique wildlife viewing experience.',
    'Experience the magic of a hot air balloon flight over the spectacular landscapes of Mpumalanga. Watch the sunrise over the bushveld, spot wildlife from above, and end with a champagne breakfast. An unforgettable experience.',
    'https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=1200',
-   'adventure', '4 hours', 'easy', 4500, 'ZAR', true, true, 3),
+   'adventure', '4 hours', 'easy', 4500, 'USD', true, true, 3),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'chimp-eden', 'Chimpanzee Sanctuary Visit',
    'Meet rescued chimpanzees at the renowned Jane Goodall Institute sanctuary.',
    'Visit Chimp Eden, the only chimpanzee sanctuary in South Africa. Learn about chimpanzee conservation, observe rescued chimps in a natural environment, and support vital rehabilitation work. Educational guided tours available.',
    'https://images.unsplash.com/photo-1540573133985-87b6da6d54a9?w=1200',
-   'safari', '2 hours', 'easy', 350, 'ZAR', true, false, 4),
+   'safari', '2 hours', 'easy', 350, 'USD', true, false, 4),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'white-water-rafting', 'White Water Rafting',
    'Tackle exciting rapids on the Blyde or Sabie Rivers with experienced guides.',
    'Get your adrenaline pumping with white water rafting on Mpumalanga''s scenic rivers. Choose from half-day or full-day trips suitable for beginners to experienced rafters. All safety equipment and professional guides provided.',
    'https://images.unsplash.com/photo-1504870712357-65ea720d6078?w=1200',
-   'adventure', '4 hours', 'moderate', 950, 'ZAR', true, false, 5)
+   'adventure', '4 hours', 'moderate', 950, 'USD', true, false, 5)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,
@@ -236,7 +236,7 @@ VALUES
    'lodge', 5,
    '["Pool", "Spa", "Restaurant", "WiFi", "Game Drives", "Bar", "Room Service", "Concierge"]'::jsonb,
    '{"address": "Paul Kruger Gate Road, Skukuza", "lat": -25.0183, "lng": 31.4853}'::jsonb,
-   3500, 'ZAR', true, true, 1),
+   3500, 'USD', true, true, 1),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'canyon-lodge-spa', 'Canyon Lodge & Spa',
    'Boutique lodge perched on the edge of Blyde River Canyon with infinity pool views.',
@@ -245,7 +245,7 @@ VALUES
    'lodge', 4,
    '["Pool", "Spa", "Restaurant", "WiFi", "Hiking", "Bar", "Mountain Views"]'::jsonb,
    '{"address": "Blyde River Canyon Road", "lat": -24.5834, "lng": 30.8181}'::jsonb,
-   2800, 'ZAR', true, true, 2),
+   2800, 'USD', true, true, 2),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'riverside-bush-camp', 'Riverside Bush Camp',
    'Authentic tented safari camp on the banks of the Sabie River.',
@@ -254,7 +254,7 @@ VALUES
    'camp', 3,
    '["Restaurant", "Bar", "Bird Watching", "Nature Walks", "River Views"]'::jsonb,
    '{"address": "Sabie River Valley", "lat": -25.1019, "lng": 30.7811}'::jsonb,
-   1500, 'ZAR', true, false, 3),
+   1500, 'USD', true, false, 3),
 
   ('e193b62e-af6e-4721-a2f6-95694bb22891', 'pilgrims-rest-inn', 'Pilgrim''s Rest Inn',
    'Historic guesthouse in the heart of the gold mining heritage town.',
@@ -263,7 +263,7 @@ VALUES
    'guesthouse', 3,
    '["Restaurant", "Bar", "WiFi", "Historic", "Garden"]'::jsonb,
    '{"address": "Main Street, Pilgrim''s Rest", "lat": -24.8938, "lng": 30.7543}'::jsonb,
-   950, 'ZAR', true, false, 4)
+   950, 'USD', true, false, 4)
 ON CONFLICT (tenant_id, slug) DO UPDATE SET
   name              = EXCLUDED.name,
   short_description = EXCLUDED.short_description,

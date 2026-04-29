@@ -1,6 +1,7 @@
 "use client"
 
 import { useTenant } from "@/lib/tenant/context"
+import { formatPrice } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Star } from "lucide-react"
@@ -75,7 +76,7 @@ export default function AccommodationsPage() {
                         {accommodation.short_description}
                       </p>
                       <p className="mt-4 font-semibold text-foreground">
-                        From {accommodation.price_currency} {accommodation.price_from?.toLocaleString()}/night
+                        From {formatPrice(accommodation.price_from, accommodation.price_currency)}/night
                       </p>
                     </CardContent>
                   </Card>

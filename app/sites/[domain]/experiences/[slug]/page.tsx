@@ -1,6 +1,7 @@
 "use client"
 
 import { useTenant } from "@/lib/tenant/context"
+import { formatPrice } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
@@ -96,7 +97,7 @@ export default function ExperienceDetailPage() {
                       <div>
                         <p className="text-sm text-muted-foreground">Price From</p>
                         <p className="font-medium text-lg">
-                          {experience.price_currency} {experience.price_from?.toLocaleString()}
+                          {formatPrice(experience.price_from, experience.price_currency)}
                         </p>
                       </div>
                     </div>
