@@ -17,6 +17,8 @@ export default function AccommodationsPage() {
 
   const { data: accommodations, isLoading } = useSWR(`/api/tenant/${domain}/accommodations`, fetcher)
 
+  const basePath = `/sites/${domain}`
+
   return (
     <div className="bg-background">
       {/* Hero */}
@@ -50,7 +52,7 @@ export default function AccommodationsPage() {
           ) : accommodations?.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {accommodations.map((accommodation: any) => (
-                <Link key={accommodation.id} href={`/accommodations/${accommodation.slug}`}>
+                <Link key={accommodation.id} href={`${basePath}/accommodations/${accommodation.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg h-full">
                     <div className="relative h-48 overflow-hidden">
                       <img

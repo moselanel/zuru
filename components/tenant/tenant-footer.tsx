@@ -1,10 +1,15 @@
 "use client"
 
 import Link from "next/link"
+import { useParams } from "next/navigation"
 import { useTenant } from "@/lib/tenant/context"
 
 export function TenantFooter() {
   const tenant = useTenant()
+  const params = useParams()
+  const domain = params.domain as string
+  const basePath = `/sites/${domain}`
+  
   return (
     <footer className="bg-muted/30 border-t border-border">
       <div className="container mx-auto px-4 py-12">
@@ -27,22 +32,22 @@ export function TenantFooter() {
             <h4 className="font-medium mb-4 text-foreground">Explore</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/destinations" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={`${basePath}/destinations`} className="text-muted-foreground hover:text-foreground transition-colors">
                   Destinations
                 </Link>
               </li>
               <li>
-                <Link href="/experiences" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={`${basePath}/experiences`} className="text-muted-foreground hover:text-foreground transition-colors">
                   Experiences
                 </Link>
               </li>
               <li>
-                <Link href="/accommodations" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={`${basePath}/accommodations`} className="text-muted-foreground hover:text-foreground transition-colors">
                   Accommodations
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href={`${basePath}/contact`} className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact Us
                 </Link>
               </li>

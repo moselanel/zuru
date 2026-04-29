@@ -17,6 +17,8 @@ export default function ExperiencesPage() {
 
   const { data: experiences, isLoading } = useSWR(`/api/tenant/${domain}/experiences`, fetcher)
 
+  const basePath = `/sites/${domain}`
+
   return (
     <div className="bg-background">
       {/* Hero */}
@@ -50,7 +52,7 @@ export default function ExperiencesPage() {
           ) : experiences?.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {experiences.map((experience: any) => (
-                <Link key={experience.id} href={`/experiences/${experience.slug}`}>
+                <Link key={experience.id} href={`${basePath}/experiences/${experience.slug}`}>
                   <Card className="group overflow-hidden border-border/50 hover:border-primary/50 transition-all hover:shadow-lg h-full">
                     <div className="relative h-48 overflow-hidden">
                       <img

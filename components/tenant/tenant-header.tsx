@@ -2,20 +2,26 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { useParams } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTenant } from "@/lib/tenant/context"
 
 export function TenantHeader() {
   const tenant = useTenant()
+  const params = useParams()
+  const domain = params.domain as string
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  // Base path for all tenant links
+  const basePath = `/sites/${domain}`
+
   const navItems = [
-    { label: "Home", href: "/" },
-    { label: "Destinations", href: "/destinations" },
-    { label: "Experiences", href: "/experiences" },
-    { label: "Accommodations", href: "/accommodations" },
-    { label: "Contact", href: "/contact" },
+    { label: "Home", href: basePath },
+    { label: "Destinations", href: `${basePath}/destinations` },
+    { label: "Experiences", href: `${basePath}/experiences` },
+    { label: "Accommodations", href: `${basePath}/accommodations` },
+    { label: "Contact", href: `${basePath}/contact` },
   ]
 
   return (
@@ -23,7 +29,7 @@ export function TenantHeader() {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          <Link href={basePath} className="flex items-center gap-2">
             {tenant.logo_url ? (
               <img src={tenant.logo_url} alt={tenant.name} className="h-8 w-auto" />
             ) : (
@@ -59,7 +65,7 @@ export function TenantHeader() {
               }}
               className="hover:opacity-90"
             >
-              <Link href="/contact">Plan Your Trip</Link>
+              <Link href={`${basePath}/contact`}>Plan Your Trip</Link>
             </Button>
           </div>
 
@@ -95,7 +101,7 @@ export function TenantHeader() {
                 }}
                 className="w-full hover:opacity-90"
               >
-                <Link href="/contact">Plan Your Trip</Link>
+                <Link href={`${basePath}/contact`}>Plan Your Trip</Link>
               </Button>
             </div>
           </nav>
