@@ -21,22 +21,20 @@ interface ProvisionTenantResult {
 export async function provisionTenant(
   input: ProvisionTenantInput
 ): Promise<ProvisionTenantResult> {
-  console.log("[v0] provisionTenant called for:", input.email, input.organizationName)
-  
   const supabase = await createClient()
-  const serviceClient = createServiceClient() // Bypasses RLS for admin operations
+  const serviceClient = createServiceClient()
 
   const { email, password, firstName, lastName, organizationName, plan = "tembea" } = input
 
   // Generate and validate slug
   let slug = generateTenantSlug(organizationName)
-  
+
   if (!isValidTenantSlug(slug)) {
     slug = generateTenantSlug(organizationName + "-" + Date.now().toString(36))
   }
 
-  // Check if slug already exists
-  const { data: existingTenant } = await supabase
+  // Check slug uniqueness via service client (bypasses RLS so we see all tenants)
+  const { data: existingTenant } = await serviceClient
     .from("tenants")
     .select("id")
     .eq("slug", slug)
@@ -47,19 +45,19 @@ export async function provisionTenant(
   }
 
   // Get plan limits
-  const { data: planData } = await supabase
+  const { data: planData } = await serviceClient
     .from("plans")
     .select("*")
     .eq("id", plan)
     .single()
 
-  // Create user account
-  console.log("[v0] Creating user account...")
+  // Step 1: Create auth user + trigger verification email
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ?? 
+      emailRedirectTo:
+        process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ??
         `${process.env.NEXT_PUBLIC_SITE_URL || "https://zuru.africa"}/auth/callback`,
       data: {
         first_name: firstName,
@@ -68,18 +66,16 @@ export async function provisionTenant(
     },
   })
 
-  console.log("[v0] Auth signup result - user:", authData?.user?.id, "error:", authError?.message)
-
   if (authError || !authData.user) {
-    console.log("[v0] Auth signup failed:", authError?.message)
     return {
       success: false,
       error: authError?.message || "Failed to create user account",
     }
   }
 
-  // Create tenant using service role client (bypasses RLS)
-  console.log("[v0] Creating tenant with slug:", slug)
+  const userId = authData.user.id
+
+  // Step 2: Create tenant — rollback auth user on failure
   const { data: tenant, error: tenantError } = await serviceClient
     .from("tenants")
     .insert({
@@ -87,50 +83,63 @@ export async function provisionTenant(
       name: organizationName,
       subscription_tier: plan,
       subscription_status: "trialing",
-      max_destinations: planData?.max_destinations || 1,
-      max_listings: planData?.max_listings || 50,
-      max_users: planData?.max_users || 2,
-      max_languages: planData?.max_languages || 3,
-      created_by: authData.user.id,
+      max_destinations: planData?.max_destinations ?? 1,
+      max_listings: planData?.max_listings ?? 50,
+      max_users: planData?.max_users ?? 2,
+      max_languages: planData?.max_languages ?? 3,
+      created_by: userId,
     })
     .select()
     .single()
 
-  console.log("[v0] Tenant creation result - tenant:", tenant?.id, "error:", tenantError?.message)
-
   if (tenantError || !tenant) {
-    console.log("[v0] Tenant creation failed:", tenantError?.message)
+    await serviceClient.auth.admin.deleteUser(userId)
     return {
       success: false,
       error: tenantError?.message || "Failed to create organization",
     }
   }
 
-  // Link user to tenant as owner (using service client to bypass RLS)
-  console.log("[v0] Linking user to tenant...")
+  // Step 3: Link user to tenant as owner — rollback both on failure
   const { error: linkError } = await serviceClient
     .from("tenant_users")
     .insert({
       tenant_id: tenant.id,
-      user_id: authData.user.id,
+      user_id: userId,
       role: "owner",
       can_manage_content: true,
       can_manage_leads: true,
       can_manage_team: true,
       can_manage_billing: true,
       can_manage_settings: true,
-      created_by: authData.user.id,
+      created_by: userId,
     })
 
   if (linkError) {
-    console.log("[v0] Link user failed:", linkError.message)
+    // Cascade delete removes related rows; then clean up the auth user
+    await serviceClient.from("tenants").delete().eq("id", tenant.id)
+    await serviceClient.auth.admin.deleteUser(userId)
     return {
       success: false,
       error: linkError.message || "Failed to link user to organization",
     }
   }
 
-  console.log("[v0] Provisioning complete - slug:", slug)
+  // Step 4: Audit log — records provisioning with the correct user_id
+  // (The DB trigger fires too but with user_id=null because we used service role for DB ops)
+  await serviceClient.from("audit_logs").insert({
+    tenant_id: tenant.id,
+    user_id: userId,
+    action: "INSERT",
+    table_name: "tenants",
+    record_id: tenant.id,
+    new_values: {
+      slug,
+      plan,
+      organization_name: organizationName,
+    },
+  })
+
   return {
     success: true,
     tenantSlug: slug,
@@ -142,9 +151,10 @@ export async function checkSlugAvailability(slug: string): Promise<boolean> {
     return false
   }
 
-  const supabase = await createClient()
-  
-  const { data } = await supabase
+  // Service client bypasses RLS so we correctly see all tenants
+  const serviceClient = createServiceClient()
+
+  const { data } = await serviceClient
     .from("tenants")
     .select("id")
     .eq("slug", slug)

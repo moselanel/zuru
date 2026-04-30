@@ -28,48 +28,40 @@ export default function LoginPage() {
     const password = formData.get("password") as string
 
     const supabase = createClient()
-    
-    console.log("[v0] Attempting login for:", email)
-    
+
     const { data, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
-    console.log("[v0] Auth response:", { user: data?.user?.id, session: !!data?.session, error: authError?.message })
-
     if (authError) {
-      console.log("[v0] Auth error:", authError.message)
       setError(authError.message)
       setIsLoading(false)
       return
     }
 
     if (!data.session) {
-      console.log("[v0] No session returned despite no error")
-      setError("Login failed - no session created. Please try again.")
+      setError("Login failed — please try again.")
       setIsLoading(false)
       return
     }
 
-    console.log("[v0] Session created, fetching tenant for user:", data.user.id)
+    // Check email verification before proceeding
+    if (!data.user.email_confirmed_at) {
+      window.location.href = `/verify-email?email=${encodeURIComponent(email)}`
+      return
+    }
 
-    // Get user's tenant
-    const { data: tenantUser, error: tenantError } = await supabase
+    // Get user's tenant and redirect accordingly
+    const { data: tenantUser } = await supabase
       .from("tenant_users")
       .select("tenant_id, tenants(slug)")
       .eq("user_id", data.user.id)
       .single()
 
-    console.log("[v0] Tenant lookup:", { tenantUser, error: tenantError?.message })
-
     if (tenantUser?.tenants) {
-      console.log("[v0] Redirecting to /admin")
-      // Redirect to tenant admin dashboard using window.location for full page reload
-      // This ensures cookies are properly set before navigating
       window.location.href = "/admin"
     } else {
-      console.log("[v0] No tenant found, redirecting to /")
       window.location.href = "/"
     }
   }

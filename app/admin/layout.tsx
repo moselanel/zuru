@@ -18,6 +18,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     redirect("/login")
   }
 
+  if (!user.email_confirmed_at) {
+    redirect(`/verify-email?email=${encodeURIComponent(user.email ?? "")}`)
+  }
+
   // Get user's tenant
   const { data: tenantUser } = await supabase
     .from("tenant_users")
