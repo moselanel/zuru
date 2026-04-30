@@ -86,9 +86,10 @@ export default function ExperienceDetailPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px]">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover"
           style={{
             backgroundImage: `url(${experience.hero_image_url || "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1920"})`,
+            backgroundPosition: 'center 30%',
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

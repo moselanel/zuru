@@ -50,8 +50,8 @@ export default function TenantContactPage() {
       {/* Hero */}
       <section className="relative h-72 md:h-96 flex items-end overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
-          style={{ backgroundImage: `url(https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920)` }}
+          className="absolute inset-0 bg-cover scale-105"
+          style={{ backgroundImage: `url(https://images.unsplash.com/photo-1516426122078-c23e76319801?w=1920)`, backgroundPosition: 'center 30%' }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
         <div className="absolute inset-0" style={{ background: `linear-gradient(to top, ${tenant.primary_color}cc 0%, transparent 60%)` }} />

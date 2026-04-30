@@ -122,9 +122,10 @@ export default function AccommodationDetailPage() {
       {/* Hero */}
       <section className="relative h-[50vh] min-h-[400px]">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover"
           style={{
             backgroundImage: `url(${accommodation.hero_image_url || "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920"})`,
+            backgroundPosition: 'center 30%',
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />

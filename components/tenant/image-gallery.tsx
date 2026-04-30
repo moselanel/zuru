@@ -66,7 +66,7 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
       <div className={cn("rounded-xl overflow-hidden", className)}>
         {/* 2 images: side by side */}
         {images.length === 2 && (
-          <div className="grid grid-cols-2 gap-1 h-72">
+          <div className="grid grid-cols-2 grid-rows-1 gap-1 h-72">
             {images.map((img, i) => (
               <MosaicCell key={i} src={img} alt={`${alt} ${i + 1}`} onClick={() => openLightbox(i)} />
             ))}
@@ -75,9 +75,9 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
 
         {/* 3–4 images: large left + stacked right */}
         {images.length >= 3 && images.length <= 4 && (
-          <div className="grid grid-cols-3 gap-1 h-80">
+          <div className="grid grid-cols-3 grid-rows-2 gap-1 h-80">
             <MosaicCell src={images[0]} alt={`${alt} 1`} onClick={() => openLightbox(0)} className="col-span-2 row-span-2" />
-            <div className="grid grid-rows-2 gap-1">
+            <div className="row-span-2 grid grid-rows-2 gap-1">
               {images.slice(1, 3).map((img, i) => (
                 <MosaicCell key={i} src={img} alt={`${alt} ${i + 2}`} onClick={() => openLightbox(i + 1)} />
               ))}
@@ -87,9 +87,9 @@ export function ImageGallery({ images, alt, className }: ImageGalleryProps) {
 
         {/* 5+ images: large left + 2x2 grid right */}
         {images.length >= 5 && (
-          <div className="grid grid-cols-3 gap-1 h-80">
+          <div className="grid grid-cols-3 grid-rows-2 gap-1 h-80">
             <MosaicCell src={images[0]} alt={`${alt} 1`} onClick={() => openLightbox(0)} className="col-span-2 row-span-2" />
-            <div className="grid grid-rows-2 gap-1">
+            <div className="row-span-2 grid grid-rows-2 gap-1">
               <div className="grid grid-cols-2 gap-1">
                 {images.slice(1, 3).map((img, i) => (
                   <MosaicCell key={i} src={img} alt={`${alt} ${i + 2}`} onClick={() => openLightbox(i + 1)} />
@@ -134,7 +134,7 @@ function MosaicCell({
 }: { src: string; alt: string; onClick: () => void; className?: string }) {
   return (
     <div
-      className={cn("relative overflow-hidden cursor-pointer group", className)}
+      className={cn("relative overflow-hidden cursor-pointer group h-full", className)}
       onClick={onClick}
     >
       <img

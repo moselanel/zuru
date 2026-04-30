@@ -414,6 +414,315 @@ ON CONFLICT (tenant_id, slug) DO UPDATE SET
   max_guests        = EXCLUDED.max_guests;
 
 -- ============================================
+-- CAPE TOWN — DESTINATION UPDATE + FULL DATA
+-- ============================================
+
+-- Fix Cape Town hero + gallery images (previous images were incorrect)
+INSERT INTO destinations (
+  tenant_id, slug, name, short_description, description,
+  hero_image_url, gallery, location, is_published, is_featured, sort_order
+) VALUES (
+  'e193b62e-af6e-4721-a2f6-95694bb22891', 'cape-town', 'Cape Town',
+  'The Mother City — where Table Mountain meets the Atlantic Ocean.',
+  'Cape Town is one of the world''s most beautiful cities, nestled between the iconic Table Mountain and the sea. Take the cable car to the summit for panoramic views, explore the historic Bo-Kaap neighbourhood, visit Robben Island where Nelson Mandela was imprisoned, and watch African penguins at Boulders Beach. The V&A Waterfront offers world-class dining, shopping, and harbour views.',
+  'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200',
+  '[
+    "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200",
+    "https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=1200",
+    "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=1200",
+    "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200",
+    "https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=1200"
+  ]'::jsonb,
+  '{"lat": -33.9249, "lng": 18.4241, "region": "Western Cape"}'::jsonb,
+  true, true, 0
+) ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  hero_image_url    = EXCLUDED.hero_image_url,
+  gallery           = EXCLUDED.gallery,
+  is_featured       = EXCLUDED.is_featured,
+  sort_order        = EXCLUDED.sort_order;
+
+-- ============================================
+-- GARDEN ROUTE — DESTINATION UPDATE + FULL DATA
+-- ============================================
+
+-- Fix Garden Route hero + gallery images (previous images were incorrect)
+INSERT INTO destinations (
+  tenant_id, slug, name, short_description, description,
+  hero_image_url, gallery, location, is_published, is_featured, sort_order
+) VALUES (
+  'e193b62e-af6e-4721-a2f6-95694bb22891', 'garden-route', 'Garden Route',
+  'A scenic stretch of coastline featuring forests, lagoons, and charming towns.',
+  'The Garden Route is one of South Africa''s most beloved road trips, stretching 300km from Mossel Bay to Storms River. Experience Knysna''s iconic lagoon and Heads, the ancient Tsitsikamma forest, whale watching at Plettenberg Bay, and adrenaline activities like the world''s highest commercial bungee jump at Bloukrans Bridge. With a mild climate year-round, the Garden Route enchants at any season.',
+  'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
+  '[
+    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200",
+    "https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=1200",
+    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200"
+  ]'::jsonb,
+  '{"lat": -33.9646, "lng": 22.4620, "region": "Western & Eastern Cape"}'::jsonb,
+  true, true, 1
+) ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  hero_image_url    = EXCLUDED.hero_image_url,
+  gallery           = EXCLUDED.gallery,
+  is_featured       = EXCLUDED.is_featured,
+  sort_order        = EXCLUDED.sort_order;
+
+-- ============================================
+-- CAPE TOWN — EXPERIENCES
+-- ============================================
+
+INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, highlights, included, excluded, requirements, what_to_bring, group_size_min, group_size_max, is_published, is_featured, sort_order)
+VALUES
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'table-mountain-cable-car', 'Table Mountain Cable Car',
+   'Ride the iconic rotating cable car to the summit of Table Mountain for 360° views.',
+   'The Table Mountain Aerial Cableway takes you to the summit of one of the world''s most recognisable landmarks. The rotating cable car offers 360° views on the ascent. At the top, explore 3km of walking trails, spot unique fynbos flora and dassies, and take in views stretching to Robben Island, the Cape Peninsula, and the Winelands.',
+   'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1200',
+   'sightseeing', '3 hours', 'easy', 60, 'USD',
+   '["360° rotating cable car with panoramic views", "3km of summit walking trails", "Spot Cape dassies and endemic fynbos", "Views to Robben Island and Cape Peninsula"]'::jsonb,
+   '["Return cable car ticket", "Summit access", "Trail map"]'::jsonb,
+   '["Transport to lower cable station", "Food and drinks", "Gratuities"]'::jsonb,
+   '["Suitable for all ages", "Wear sturdy non-slip footwear", "Check weather before going — cable car closes in high winds", "Arrive early to avoid queues"]'::jsonb,
+   '["Warm layer (it''s cooler at the summit)", "Sunscreen and hat", "Camera", "Comfortable walking shoes", "Water bottle"]'::jsonb,
+   1, 50, true, true, 6),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'cape-point-day-trip', 'Cape Point & Peninsula Tour',
+   'A full-day scenic drive along the Cape Peninsula to the dramatic Cape Point headland.',
+   'Drive the Cape Peninsula, one of the world''s most scenic coastal routes. Visit Hout Bay, Chapman''s Peak Drive, watch African penguins at Boulders Beach, and end at the breathtaking Cape Point — the southwest tip of Africa. Includes a funicular ride to the lighthouse for spectacular Atlantic Ocean views.',
+   'https://images.unsplash.com/photo-1549880338-65ddcdfd017b?w=1200',
+   'sightseeing', '8 hours', 'easy', 180, 'USD',
+   '["Chapman''s Peak scenic coastal drive", "African penguins at Boulders Beach", "Cape Point — southwest tip of Africa", "Funicular to the historic lighthouse"]'::jsonb,
+   '["Professional guide", "Air-conditioned transport", "Lunch at a harbourfront restaurant", "All entry fees"]'::jsonb,
+   '["Hotel pickup/drop-off", "Alcoholic beverages", "Personal shopping", "Gratuities"]'::jsonb,
+   '["All fitness levels welcome", "Minimum age: 4 years", "Comfortable shoes recommended for penguin colony boardwalks"]'::jsonb,
+   '["Sunscreen and hat", "Light jacket (coastal winds)", "Camera", "Water bottle"]'::jsonb,
+   2, 16, true, true, 7),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'robben-island-tour', 'Robben Island Ferry Tour',
+   'Visit the island where Nelson Mandela was imprisoned for 18 years.',
+   'Robben Island is a UNESCO World Heritage Site and one of South Africa''s most powerful symbols of the struggle against apartheid. The guided tour of the prison complex is led by former political prisoners, including a walk through Mandela''s cell. The ferry ride across Table Bay offers stunning views of Cape Town.',
+   'https://images.unsplash.com/photo-1559548331-f9cb98001426?w=1200',
+   'cultural', '4 hours', 'easy', 45, 'USD',
+   '["Tour of Mandela''s cell block guided by former political prisoners", "Bus tour of the island including World War II fortifications", "Ferry ride across Table Bay with Table Mountain views", "UNESCO World Heritage Site"]'::jsonb,
+   '["Return ferry ticket from V&A Waterfront", "Island bus tour", "Guided prison tour", "All entry fees"]'::jsonb,
+   '["Transport to V&A Waterfront", "Food and drinks on island", "Gratuities"]'::jsonb,
+   '["All ages welcome — powerful but suitable for children", "Book in advance — tickets sell out quickly", "Ferries may cancel in bad weather"]'::jsonb,
+   '["Light jacket (windy on the ferry)", "Sun protection", "Camera", "Water and snacks for the island"]'::jsonb,
+   4, 40, true, true, 8),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'cape-winelands-tour', 'Cape Winelands Wine Tour',
+   'Explore the historic wine estates of Stellenbosch, Franschhoek, and Paarl.',
+   'The Cape Winelands, just 45 minutes from Cape Town, is one of the world''s great wine regions. Visit 3-4 award-winning estates, taste world-class Pinotage, Chenin Blanc, and Cap Classique, and enjoy lunch at a winery restaurant. The scenery — oak-lined streets, Cape Dutch homesteads, and mountain backdrops — is as memorable as the wine.',
+   'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1200',
+   'cultural', '7 hours', 'easy', 150, 'USD',
+   '["3–4 award-winning wine estates in Stellenbosch or Franschhoek", "Guided wine tastings with a sommelier", "Gourmet lunch at a vineyard restaurant", "Cape Dutch architecture and scenery"]'::jsonb,
+   '["Professional guide and driver", "Tastings at all estates (4–6 wines per estate)", "Gourmet lunch", "Transport from Cape Town"]'::jsonb,
+   '["Hotel pickup outside Cape Town CBD", "Additional wine purchases", "Gratuities"]'::jsonb,
+   '["Minimum age: 18 for wine tasting", "Not suitable for those who cannot consume alcohol (juice alternatives available)", "Book 48 hours in advance"]'::jsonb,
+   '["Smart-casual clothing", "Sun hat", "Camera"]'::jsonb,
+   2, 12, true, false, 9),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'boulders-beach-penguins', 'Boulders Beach Penguin Colony',
+   'Watch the thriving colony of endangered African penguins at their famous beach habitat.',
+   'Boulders Beach is home to a colony of over 3,000 African penguins, a species listed as Endangered. Walk the boardwalks between the penguins, watch them waddle, nest, and swim just metres away. The sheltered bay with its huge granite boulders makes a perfect swimming spot too.',
+   'https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=1200',
+   'wildlife', '2 hours', 'easy', 35, 'USD',
+   '["Up-close encounters with wild African penguins", "Boardwalk through nesting areas", "Swim at sheltered Boulders Beach", "Learn about penguin conservation"]'::jsonb,
+   '["Entry fee to Boulders Beach (Table Mountain National Park)", "Guided boardwalk information points"]'::jsonb,
+   '["Transport to Simon''s Town", "Food and drinks", "Gratuities"]'::jsonb,
+   '["All ages and fitness levels", "Do not touch or feed the penguins", "Wear comfortable shoes for sandy paths"]'::jsonb,
+   '["Swimwear if you want to swim", "Sunscreen", "Camera with zoom lens", "Water bottle"]'::jsonb,
+   1, 30, true, false, 10)
+ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  highlights        = EXCLUDED.highlights,
+  included          = EXCLUDED.included,
+  excluded          = EXCLUDED.excluded,
+  requirements      = EXCLUDED.requirements,
+  what_to_bring     = EXCLUDED.what_to_bring,
+  group_size_min    = EXCLUDED.group_size_min,
+  group_size_max    = EXCLUDED.group_size_max;
+
+-- ============================================
+-- GARDEN ROUTE — EXPERIENCES
+-- ============================================
+
+INSERT INTO experiences (tenant_id, slug, name, short_description, description, hero_image_url, category, duration, difficulty, price_from, price_currency, highlights, included, excluded, requirements, what_to_bring, group_size_min, group_size_max, is_published, is_featured, sort_order)
+VALUES
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'bloukrans-bungee', 'Bloukrans Bungee Jump',
+   'Take the plunge from the world''s highest commercial bridge bungee jump — 216 metres.',
+   'Bloukrans Bridge is the world''s highest commercial bungee jump at 216 metres above the river gorge. You are attached to the bungee cord, step onto the platform, and free-fall into the gorge below. The jump is operated by Face Adrenalin, the pioneers of bridge bungee jumping.',
+   'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=1200',
+   'adventure', '2 hours', 'extreme', 150, 'USD',
+   '["World''s highest commercial bungee jump at 216 metres", "Jump from the iconic Bloukrans Bridge arch", "Professional Face Adrenalin crew", "Certificate of completion"]'::jsonb,
+   '["Bungee jump", "Safety harness and all equipment", "Professional supervision", "Certificate"]'::jsonb,
+   '["Transport to Bloukrans Bridge", "Photo and video packages (available on site)", "Insurance"]'::jsonb,
+   '["Minimum age: 10 years", "Maximum weight: 145 kg, minimum weight: 40 kg", "Not suitable for pregnant women or those with heart conditions, high blood pressure, recent surgeries, or epilepsy", "Must sign indemnity form"]'::jsonb,
+   '["Secure, enclosed shoes (no slip-ons)", "Comfortable clothing", "Long hair tied back", "Leave valuables at the office"]'::jsonb,
+   1, 20, true, true, 6),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'knysna-lagoon-cruise', 'Knysna Lagoon Sunset Cruise',
+   'Cruise the iconic Knysna Lagoon as the sun sets over the famous Knysna Heads.',
+   'Knysna''s sheltered lagoon is one of South Africa''s most beautiful waterways. Cruise past the famous Heads — two dramatic sandstone cliffs guarding the lagoon''s ocean entrance — and watch the sun set over the water. Enjoy sundowners, fresh oysters, and the sounds of the lagoon.',
+   'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200',
+   'water', '2 hours', 'easy', 65, 'USD',
+   '["Sunset views over the Knysna Heads", "Cruise through the sheltered lagoon", "Fresh Knysna oysters and sundowners", "Knysna kingfisher and other bird sightings"]'::jsonb,
+   '["Boat cruise", "Welcome oysters and sparkling wine", "Sunset drinks", "Knowledgeable skipper"]'::jsonb,
+   '["Transport to the harbour", "Additional drinks and food", "Gratuities"]'::jsonb,
+   '["All ages welcome", "Life jackets available on board", "Dress warmly — evenings can be cool on the water"]'::jsonb,
+   '["Warm jacket", "Camera", "Comfortable shoes (non-marking preferred)"]'::jsonb,
+   2, 24, true, true, 7),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'tsitsikamma-forest-trail', 'Tsitsikamma Forest Trail',
+   'Hike through ancient yellowwood forests and along dramatic coastal cliffs.',
+   'The Tsitsikamma National Park protects 80km of coastline and some of Africa''s oldest temperate rainforest. Hike the iconic Otter Trail section or the Waterfall trail through towering yellowwood and Outeniqua yellowwood trees. Cross the famous suspension bridge over the Storms River mouth for dramatic ocean and canyon views.',
+   'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200',
+   'adventure', '4 hours', 'moderate', 45, 'USD',
+   '["Ancient yellowwood forests — some trees over 800 years old", "Suspension bridge over Storms River mouth", "Dramatic coastal cliff scenery", "Rich birdlife including Knysna loeries"]'::jsonb,
+   '["Guided trail walk", "Park entry fee", "Bridge crossing permit"]'::jsonb,
+   '["Transport to Tsitsikamma", "Food and drinks", "Accommodation", "Gratuities"]'::jsonb,
+   '["Minimum age: 7 years", "Moderate fitness required — some steep sections", "Wear sturdy hiking boots — trail can be slippery when wet", "Not suitable for wheelchairs or strollers"]'::jsonb,
+   '["Sturdy hiking boots", "Rain jacket", "Water and snacks", "Insect repellent", "Camera"]'::jsonb,
+   2, 16, true, true, 8),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'plett-whale-watching', 'Plettenberg Bay Whale Watching',
+   'Spot Southern Right whales and dolphins in the waters off Plettenberg Bay.',
+   'Plettenberg Bay is one of South Africa''s best whale watching destinations, particularly from June to November when Southern Right whales come to calve in the warm, sheltered bay. Experienced marine guides take you out on rigid inflatable boats to observe whales, dolphins, Cape fur seals, and seabirds up close.',
+   'https://images.unsplash.com/photo-1523805009345-7448845a9e53?w=1200',
+   'wildlife', '3 hours', 'easy', 85, 'USD',
+   '["Southern Right whales and their calves (June–November)", "Common and bottlenose dolphins year-round", "Cape fur seal colony", "Diverse seabird life including gannets"]'::jsonb,
+   '["Boat trip", "Marine biologist guide", "Life jackets", "Complimentary warm drink on return"]'::jsonb,
+   '["Transport to the harbour", "Weather cannot be guaranteed", "Whale sightings not guaranteed (though highly likely in season)"]'::jsonb,
+   '["Minimum age: 5 years", "Not recommended for those prone to seasickness in rough seas", "Trips may be cancelled in bad weather — full refund provided"]'::jsonb,
+   '["Warm waterproof jacket", "Sunscreen", "Hat and sunglasses", "Camera with zoom lens", "Motion sickness tablets if needed"]'::jsonb,
+   2, 20, true, false, 9),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'garden-route-road-trip', 'Garden Route Highlights Drive',
+   'A curated full-day road trip covering Knysna, Wilderness, and the Tsitsikamma coast.',
+   'Let a local expert guide show you the best of the Garden Route in a single day. From the Indian Ocean beaches of Wilderness and the Knysna Lagoon to the ancient Tsitsikamma forests and the dramatic Storms River mouth. Includes stops for fresh oysters, scenic viewpoints, and a forest walk.',
+   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200',
+   'adventure', '10 hours', 'easy', 200, 'USD',
+   '["Wilderness beach and lagoon views", "Fresh oysters at Knysna Quays", "Tsitsikamma Storms River bridge", "Scenic forest stops and viewpoints throughout"]'::jsonb,
+   '["Professional guide and vehicle", "Lunch and two snack stops", "All entry fees", "Oyster tasting at Knysna"]'::jsonb,
+   '["Hotel pickup outside George/Knysna", "Additional shopping", "Gratuities"]'::jsonb,
+   '["All ages welcome", "Comfortable walking shoes for forest stops", "Camera essential"]'::jsonb,
+   '["Camera", "Comfortable shoes", "Sun protection", "Light jacket for forest sections"]'::jsonb,
+   1, 8, true, false, 10)
+ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  highlights        = EXCLUDED.highlights,
+  included          = EXCLUDED.included,
+  excluded          = EXCLUDED.excluded,
+  requirements      = EXCLUDED.requirements,
+  what_to_bring     = EXCLUDED.what_to_bring,
+  group_size_min    = EXCLUDED.group_size_min,
+  group_size_max    = EXCLUDED.group_size_max;
+
+-- ============================================
+-- CAPE TOWN — ACCOMMODATIONS
+-- ============================================
+
+INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, room_types, total_rooms, max_guests, location, price_from, price_currency, is_published, is_featured, sort_order)
+VALUES
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'silo-hotel-cape-town', 'The Silo Hotel',
+   'A design icon rising above the V&A Waterfront in a converted grain elevator silo.',
+   'The Silo Hotel occupies the upper floors of the converted grain elevator at the V&A Waterfront. With only 28 rooms, each individually decorated with curated contemporary art, the hotel is known for its extraordinary aesthetics, panoramic views of Table Mountain and the harbour, and its rooftop pool which offers 360° views of Cape Town.',
+   'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200',
+   'hotel', 5,
+   '["Rooftop Pool", "Spa", "Restaurant", "WiFi", "Bar", "Concierge", "Butler Service", "Valet Parking", "Table Mountain Views"]'::jsonb,
+   '[{"name":"Superior Room","description":"Uniquely designed room with original pillow-shaped windows, king or twin beds, and city or harbour views"},{"name":"Deluxe Room","description":"Larger room with sitting area, statement art pieces, and panoramic harbour or mountain views"},{"name":"Silo Suite","description":"Expansive suite with curved pillow windows on two sides, private dining room, and butler service"},{"name":"Penthouse","description":"The ultimate Cape Town experience — duplex penthouse spanning the full width of the silo with 360° city views"}]'::jsonb,
+   28, 56,
+   '{"address": "Silo Square, V&A Waterfront, Cape Town", "lat": -33.9063, "lng": 18.4208}'::jsonb,
+   750, 'USD', true, true, 5),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'mount-nelson-hotel', 'Belmond Mount Nelson Hotel',
+   'Cape Town''s legendary "Pink Lady" — a landmark hotel in the heart of the Gardens.',
+   'Since 1899, the Belmond Mount Nelson Hotel has been Cape Town''s most storied address. Set in six acres of manicured gardens at the foot of Devil''s Peak, the hotel offers elegant rooms, a renowned afternoon tea, two pools, and a sense of colonial grandeur. The famous afternoon tea is a Cape Town institution not to be missed.',
+   'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200',
+   'hotel', 5,
+   '["Two Pools", "Spa", "Restaurant", "WiFi", "Bar", "Afternoon Tea", "Tennis", "Gardens", "Concierge"]'::jsonb,
+   '[{"name":"Classic Room","description":"Elegantly appointed room with period furnishings, garden or mountain views, and all modern comforts"},{"name":"Superior Garden Room","description":"Spacious room with French doors opening to a private garden terrace"},{"name":"Junior Suite","description":"Expansive suite with separate lounge, fireplace, and mountain views"},{"name":"Lord Milner Suite","description":"Historic grand suite in the original 1899 wing with private lounge, fireplace, and butler"}]'::jsonb,
+   209, 420,
+   '{"address": "76 Orange St, Gardens, Cape Town", "lat": -33.9302, "lng": 18.4113}'::jsonb,
+   650, 'USD', true, true, 6),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'pod-boutique-cape-town', 'POD Boutique Hotel',
+   'Hip sea-facing boutique hotel in Sea Point with stylish rooms and a rooftop terrace.',
+   'POD is Cape Town''s most stylish mid-range option, perched on the Sea Point promenade facing the Atlantic Ocean. Minimalist rooms feature custom furniture, local artwork, and large windows facing the sea. The rooftop terrace with plunge pool and ocean views is a favourite for sundowners.',
+   'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200',
+   'boutique', 4,
+   '["Rooftop Plunge Pool", "Restaurant", "WiFi", "Bar", "Sea Views", "Gym", "Concierge"]'::jsonb,
+   '[{"name":"Sea View Room","description":"Compact room with floor-to-ceiling windows and Atlantic Ocean views"},{"name":"Superior Sea View","description":"Larger room with sitting area and panoramic ocean and Lion''s Head views"},{"name":"Suite","description":"Studio suite with kitchenette, private balcony, and sweeping Atlantic views"}]'::jsonb,
+   60, 120,
+   '{"address": "Sea Point Promenade, Cape Town", "lat": -33.9238, "lng": 18.3925}'::jsonb,
+   280, 'USD', true, false, 7)
+ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  amenities         = EXCLUDED.amenities,
+  room_types        = EXCLUDED.room_types,
+  total_rooms       = EXCLUDED.total_rooms,
+  max_guests        = EXCLUDED.max_guests;
+
+-- ============================================
+-- GARDEN ROUTE — ACCOMMODATIONS
+-- ============================================
+
+INSERT INTO accommodations (tenant_id, slug, name, short_description, description, hero_image_url, category, star_rating, amenities, room_types, total_rooms, max_guests, location, price_from, price_currency, is_published, is_featured, sort_order)
+VALUES
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'hog-hollow-lodge', 'Hog Hollow Country Lodge',
+   'Award-winning hillside lodge nestled in the indigenous forest above Plettenberg Bay.',
+   'Hog Hollow is one of South Africa''s most acclaimed boutique lodges, perched above the Matjes River valley in a private nature reserve. Each suite is an individual wooden chalet on stilts, nestled among the trees with private decks for birdwatching and forest views. Voted one of the world''s best small hotels, it combines warm hospitality with exceptional cuisine and access to the coast.',
+   'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1200',
+   'lodge', 5,
+   '["Pool", "Restaurant", "WiFi", "Forest Walks", "Bird Watching", "Bar", "Transfer Service"]'::jsonb,
+   '[{"name":"Forest Suite","description":"Individual wooden chalet on stilts among the trees with private deck, outdoor shower, and forest views"},{"name":"Luxury Suite","description":"Larger split-level suite with lounge area, fireplace, and sweeping forest and valley views"},{"name":"Family Suite","description":"Two interconnecting suites perfect for families, with children''s activities included"}]'::jsonb,
+   16, 32,
+   '{"address": "Askop Road, The Crags, Plettenberg Bay", "lat": -33.9895, "lng": 23.4500}'::jsonb,
+   450, 'USD', true, true, 8),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'knysna-lagoon-hotel', 'Knysna Log-Inn Hotel',
+   'Characterful log cabin hotel at the heart of Knysna, steps from the waterfront.',
+   'The Knysna Log-Inn is a charming landmark in the heart of Knysna, built from hand-crafted logs. Rooms and chalets are individually decorated with local art and natural materials. Walk to the Knysna Quays for oysters, browse the craft market, or book a lagoon cruise from the hotel.',
+   'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200',
+   'hotel', 4,
+   '["Pool", "Restaurant", "WiFi", "Bar", "Lagoon Views", "Garden"]'::jsonb,
+   '[{"name":"Standard Log Cabin Room","description":"Cosy room in the original log structure with en-suite bathroom and garden views"},{"name":"Lagoon View Room","description":"Superior room with a private balcony overlooking the Knysna Lagoon"},{"name":"Family Chalet","description":"Self-contained log chalet with kitchenette, lounge, and private garden, sleeps up to 4"}]'::jsonb,
+   65, 130,
+   '{"address": "Gray Street, Knysna", "lat": -34.0369, "lng": 23.0478}'::jsonb,
+   180, 'USD', true, true, 9),
+
+  ('e193b62e-af6e-4721-a2f6-95694bb22891', 'storms-river-mouth-rest-camp', 'Tsitsikamma Village Inn',
+   'Rustic but comfortable village inn at the gateway to Tsitsikamma National Park.',
+   'Tsitsikamma Village Inn is a charming collection of thatched rondavels and chalets in the village of Storms River. It''s the closest overnight option to the Tsitsikamma National Park trailhead, making it perfect for hikers and nature lovers. The restaurant serves hearty food and local craft beer from the region.',
+   'https://images.unsplash.com/photo-1559548331-f9cb98001426?w=1200',
+   'guesthouse', 3,
+   '["Restaurant", "Bar", "WiFi", "Garden", "Hiking Access", "Braai Facilities"]'::jsonb,
+   '[{"name":"Standard Rondavel","description":"Traditional circular thatched rondavel with en-suite bathroom and garden views"},{"name":"Chalet","description":"Self-contained chalet with small kitchenette, lounge area, and private veranda"},{"name":"Family Unit","description":"Larger chalet with two bedrooms and private braai area, sleeps up to 5"}]'::jsonb,
+   44, 88,
+   '{"address": "Storms River Village", "lat": -33.9733, "lng": 23.8778}'::jsonb,
+   120, 'USD', true, false, 10)
+ON CONFLICT (tenant_id, slug) DO UPDATE SET
+  name              = EXCLUDED.name,
+  short_description = EXCLUDED.short_description,
+  description       = EXCLUDED.description,
+  amenities         = EXCLUDED.amenities,
+  room_types        = EXCLUDED.room_types,
+  total_rooms       = EXCLUDED.total_rooms,
+  max_guests        = EXCLUDED.max_guests;
+
+-- ============================================
 -- SAMPLE ENQUIRIES
 -- ============================================
 

@@ -30,11 +30,12 @@ export default function TenantHomePage() {
       {/* Hero Section */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center scale-105"
+          className="absolute inset-0 bg-cover scale-105"
           style={{
             backgroundImage: featuredDestinations[0]?.hero_image_url
               ? `url(${featuredDestinations[0].hero_image_url})`
               : `url(https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=1920)`,
+            backgroundPosition: 'center 35%',
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
