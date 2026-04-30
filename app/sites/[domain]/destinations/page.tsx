@@ -5,10 +5,17 @@ import { useTenant } from "@/lib/tenant/context"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Search, LayoutGrid, Map } from "lucide-react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
+import dynamic from "next/dynamic"
+
+const DestinationsOverviewMap = dynamic(
+  () => import("@/components/tenant/destinations-overview-map").then((m) => m.DestinationsOverviewMap),
+  { ssr: false, loading: () => <div className="h-[500px] w-full rounded-xl bg-muted animate-pulse" /> }
+)
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -17,10 +24,10 @@ export default function DestinationsPage() {
   const params = useParams()
   const domain = params.domain as string
   const [searchQuery, setSearchQuery] = useState("")
+  const [view, setView] = useState<"grid" | "map">("grid")
 
   const { data: destinations, isLoading } = useSWR(`/api/tenant/${domain}/destinations`, fetcher)
 
-  // Filter destinations by search
   const filteredDestinations = useMemo(() => {
     if (!destinations) return []
     if (!searchQuery) return destinations
@@ -49,24 +56,50 @@ export default function DestinationsPage() {
         </div>
       </section>
 
-      {/* Destinations Grid */}
+      {/* Content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          {/* Search */}
           {!isLoading && destinations?.length > 0 && (
-            <div className="mb-8">
-              <div className="relative max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search destinations..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9"
-                />
+            <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              {/* Search */}
+              <div>
+                <div className="relative max-w-md">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search destinations..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-9"
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Showing {filteredDestinations.length} of {destinations.length} destinations
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground mt-3">
-                Showing {filteredDestinations.length} of {destinations.length} destinations
-              </p>
+
+              {/* View toggle */}
+              <div className="flex items-center gap-1 border rounded-lg p-1 w-fit bg-muted/30">
+                <Button
+                  variant={view === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  className="gap-2"
+                  style={view === "grid" ? { backgroundColor: tenant.primary_color, color: "white" } : {}}
+                  onClick={() => setView("grid")}
+                >
+                  <LayoutGrid className="h-4 w-4" />
+                  Grid
+                </Button>
+                <Button
+                  variant={view === "map" ? "default" : "ghost"}
+                  size="sm"
+                  className="gap-2"
+                  style={view === "map" ? { backgroundColor: tenant.primary_color, color: "white" } : {}}
+                  onClick={() => setView("map")}
+                >
+                  <Map className="h-4 w-4" />
+                  Map
+                </Button>
+              </div>
             </div>
           )}
 
@@ -82,6 +115,11 @@ export default function DestinationsPage() {
                 </Card>
               ))}
             </div>
+          ) : view === "map" ? (
+            <DestinationsOverviewMap
+              destinations={filteredDestinations}
+              primaryColor={tenant.primary_color}
+            />
           ) : filteredDestinations.length > 0 ? (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredDestinations.map((destination: any) => (
@@ -94,7 +132,7 @@ export default function DestinationsPage() {
                         className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       {destination.is_featured && (
-                        <Badge 
+                        <Badge
                           className="absolute top-3 left-3 text-white"
                           style={{ backgroundColor: tenant.primary_color }}
                         >

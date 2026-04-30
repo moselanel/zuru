@@ -23,6 +23,12 @@ import Link from "next/link"
 import { useParams } from "next/navigation"
 import useSWR from "swr"
 import { ImageGallery } from "@/components/tenant/image-gallery"
+import dynamic from "next/dynamic"
+
+const DestinationPinMap = dynamic(
+  () => import("@/components/tenant/destination-pin-map").then((m) => m.DestinationPinMap),
+  { ssr: false, loading: () => <div className="h-48 w-full rounded-lg bg-muted animate-pulse" /> }
+)
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -219,24 +225,27 @@ export default function DestinationDetailPage() {
                     </Button>
                   </div>
 
-                  {/* Map Preview (if coordinates available) */}
+                  {/* Embedded map */}
                   {location.lat && location.lng && (
                     <>
                       <Separator />
                       <div>
                         <p className="text-sm font-medium text-muted-foreground mb-3">Location</p>
+                        <DestinationPinMap
+                          lat={location.lat}
+                          lng={location.lng}
+                          name={destination.name}
+                          primaryColor={tenant.primary_color}
+                          className="h-48 w-full rounded-lg overflow-hidden border"
+                        />
                         <a
                           href={`https://www.google.com/maps?q=${location.lat},${location.lng}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block"
+                          className="mt-2 flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
                         >
-                          <div className="aspect-video rounded-lg bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors cursor-pointer border">
-                            <div className="text-center">
-                              <Map className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                              <p className="text-sm text-muted-foreground">View on Map</p>
-                            </div>
-                          </div>
+                          <Map className="h-3 w-3" />
+                          Open in Google Maps
                         </a>
                       </div>
                     </>
