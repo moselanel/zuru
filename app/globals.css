@@ -3,136 +3,112 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Zuru - Discover Africa Theme */
+/* MTPA Premium African Eco-Tourism Theme */
 :root {
-  /* Zuru Brand Colors */
-  --zuru-sunset: #D4541A;
-  --zuru-sunset-light: #F0825A;
-  --zuru-sunset-dark: #A33D0F;
-  --zuru-amber: #E8891A;
-  --zuru-amber-light: #F5B05A;
-  --zuru-plum: #5C2D6E;
-  --zuru-plum-dark: #3A1545;
-  --zuru-sand: #F5EDD8;
-  --zuru-sand-dark: #E8D9B8;
-  --zuru-ink: #1A0A22;
+  /* Primary: Deep Forest Green */
+  --background: oklch(0.98 0.005 120);
+  --foreground: oklch(0.2 0.02 60);
 
-  /* Light Mode */
-  --background: #FFFFFF;
-  --foreground: #1A0A22;
+  /* Card: Warm Sand/Cream */
+  --card: oklch(0.97 0.01 80);
+  --card-foreground: oklch(0.2 0.02 60);
 
-  --card: #FFFFFF;
-  --card-foreground: #1A0A22;
+  --popover: oklch(0.98 0.005 120);
+  --popover-foreground: oklch(0.2 0.02 60);
 
-  --popover: #FFFFFF;
-  --popover-foreground: #1A0A22;
+  /* Primary: Deep Forest Green */
+  --primary: oklch(0.35 0.08 145);
+  --primary-foreground: oklch(0.98 0.005 120);
 
-  /* Primary: Sunset Orange */
-  --primary: #D4541A;
-  --primary-foreground: #FFFFFF;
+  /* Secondary: Warm Sand */
+  --secondary: oklch(0.92 0.03 75);
+  --secondary-foreground: oklch(0.25 0.03 60);
 
-  /* Secondary: Sand */
-  --secondary: #F5EDD8;
-  --secondary-foreground: #1A0A22;
+  /* Muted: Light Beige */
+  --muted: oklch(0.94 0.015 80);
+  --muted-foreground: oklch(0.45 0.02 60);
 
-  /* Muted: Light Sand */
-  --muted: #F5EDD8;
-  --muted-foreground: #5C2D6E;
+  /* Accent: Warm Gold */
+  --accent: oklch(0.75 0.12 75);
+  --accent-foreground: oklch(0.2 0.02 60);
 
-  /* Accent: Plum */
-  --accent: #5C2D6E;
-  --accent-foreground: #FFFFFF;
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 120);
 
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
-
-  /* Border */
-  --border: #E8D9B8;
-  --input: #E8D9B8;
-  --ring: #D4541A;
+  /* Border: Soft Tan */
+  --border: oklch(0.88 0.02 80);
+  --input: oklch(0.92 0.015 80);
+  --ring: oklch(0.35 0.08 145);
 
   /* Charts */
-  --chart-1: #D4541A;
-  --chart-2: #E8891A;
-  --chart-3: #5C2D6E;
-  --chart-4: #3A1545;
-  --chart-5: #F0825A;
+  --chart-1: oklch(0.35 0.08 145);
+  --chart-2: oklch(0.75 0.12 75);
+  --chart-3: oklch(0.55 0.08 60);
+  --chart-4: oklch(0.65 0.1 30);
+  --chart-5: oklch(0.45 0.06 180);
 
-  --radius: 0.625rem;
+  --radius: 0.75rem;
 
   /* Sidebar */
-  --sidebar: #3A1545;
-  --sidebar-foreground: #F5EDD8;
-  --sidebar-primary: #D4541A;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #5C2D6E;
-  --sidebar-accent-foreground: #F5EDD8;
-  --sidebar-border: #5C2D6E;
-  --sidebar-ring: #D4541A;
+  --sidebar: oklch(0.97 0.01 80);
+  --sidebar-foreground: oklch(0.2 0.02 60);
+  --sidebar-primary: oklch(0.35 0.08 145);
+  --sidebar-primary-foreground: oklch(0.98 0.005 120);
+  --sidebar-accent: oklch(0.92 0.03 75);
+  --sidebar-accent-foreground: oklch(0.25 0.03 60);
+  --sidebar-border: oklch(0.88 0.02 80);
+  --sidebar-ring: oklch(0.35 0.08 145);
 }
 
 .dark {
-  --background: #1A0A22;
-  --foreground: #F5EDD8;
+  --background: oklch(0.15 0.02 60);
+  --foreground: oklch(0.95 0.01 80);
 
-  --card: #3A1545;
-  --card-foreground: #F5EDD8;
+  --card: oklch(0.2 0.02 60);
+  --card-foreground: oklch(0.95 0.01 80);
 
-  --popover: #3A1545;
-  --popover-foreground: #F5EDD8;
+  --popover: oklch(0.18 0.02 60);
+  --popover-foreground: oklch(0.95 0.01 80);
 
-  --primary: #D4541A;
-  --primary-foreground: #FFFFFF;
+  --primary: oklch(0.55 0.1 145);
+  --primary-foreground: oklch(0.15 0.02 60);
 
-  --secondary: #5C2D6E;
-  --secondary-foreground: #F5EDD8;
+  --secondary: oklch(0.25 0.02 60);
+  --secondary-foreground: oklch(0.95 0.01 80);
 
-  --muted: #3A1545;
-  --muted-foreground: #E8D9B8;
+  --muted: oklch(0.25 0.02 60);
+  --muted-foreground: oklch(0.65 0.02 80);
 
-  --accent: #E8891A;
-  --accent-foreground: #1A0A22;
+  --accent: oklch(0.65 0.12 75);
+  --accent-foreground: oklch(0.15 0.02 60);
 
-  --destructive: #EF4444;
-  --destructive-foreground: #FFFFFF;
+  --destructive: oklch(0.45 0.18 25);
+  --destructive-foreground: oklch(0.95 0.01 80);
 
-  --border: #5C2D6E;
-  --input: #5C2D6E;
-  --ring: #D4541A;
+  --border: oklch(0.3 0.02 60);
+  --input: oklch(0.25 0.02 60);
+  --ring: oklch(0.55 0.1 145);
 
-  --chart-1: #F0825A;
-  --chart-2: #F5B05A;
-  --chart-3: #5C2D6E;
-  --chart-4: #E8891A;
-  --chart-5: #D4541A;
+  --chart-1: oklch(0.55 0.1 145);
+  --chart-2: oklch(0.65 0.12 75);
+  --chart-3: oklch(0.55 0.08 60);
+  --chart-4: oklch(0.65 0.1 30);
+  --chart-5: oklch(0.5 0.08 180);
 
-  --sidebar: #1A0A22;
-  --sidebar-foreground: #F5EDD8;
-  --sidebar-primary: #D4541A;
-  --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #3A1545;
-  --sidebar-accent-foreground: #F5EDD8;
-  --sidebar-border: #5C2D6E;
-  --sidebar-ring: #D4541A;
+  --sidebar: oklch(0.18 0.02 60);
+  --sidebar-foreground: oklch(0.95 0.01 80);
+  --sidebar-primary: oklch(0.55 0.1 145);
+  --sidebar-primary-foreground: oklch(0.15 0.02 60);
+  --sidebar-accent: oklch(0.25 0.02 60);
+  --sidebar-accent-foreground: oklch(0.95 0.01 80);
+  --sidebar-border: oklch(0.3 0.02 60);
+  --sidebar-ring: oklch(0.55 0.1 145);
 }
 
 @theme inline {
-  --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
-  --font-serif: var(--font-plus-jakarta), Georgia, serif;
+  --font-sans: "DM Sans", "DM Sans Fallback", system-ui, sans-serif;
+  --font-serif: "Fraunces", "Fraunces Fallback", Georgia, serif;
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
-  
-  /* Zuru brand colors */
-  --color-zuru-sunset: var(--zuru-sunset);
-  --color-zuru-sunset-light: var(--zuru-sunset-light);
-  --color-zuru-sunset-dark: var(--zuru-sunset-dark);
-  --color-zuru-amber: var(--zuru-amber);
-  --color-zuru-amber-light: var(--zuru-amber-light);
-  --color-zuru-plum: var(--zuru-plum);
-  --color-zuru-plum-dark: var(--zuru-plum-dark);
-  --color-zuru-sand: var(--zuru-sand);
-  --color-zuru-sand-dark: var(--zuru-sand-dark);
-  --color-zuru-ink: var(--zuru-ink);
-  
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
