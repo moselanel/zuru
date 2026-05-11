@@ -1,152 +1,86 @@
-import { createClient } from "@/lib/supabase/server"
-import { redirect } from "next/navigation"
-import Link from "next/link"
-import { Building2, Palette, Globe, Bell, CreditCard, ChevronRight } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+"use client"
 
-export const metadata = {
-  title: "Settings | Zuru Admin",
-}
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const settingsLinks = [
-  {
-    title: "General",
-    description: "Organization name, contact details, and basic info",
-    href: "/admin/settings/general",
-    icon: Building2,
-  },
-  {
-    title: "Branding",
-    description: "Logo, colors, and visual identity for your portal",
-    href: "/admin/settings/branding",
-    icon: Palette,
-  },
-  {
-    title: "Domain",
-    description: "Custom domain settings for your portal",
-    href: "/admin/settings/domain",
-    icon: Globe,
-    badge: "Pro",
-  },
-  {
-    title: "Notifications",
-    description: "Email alerts and notification preferences",
-    href: "/admin/settings/notifications",
-    icon: Bell,
-  },
-  {
-    title: "Billing",
-    description: "Subscription plan and payment information",
-    href: "/admin/settings/billing",
-    icon: CreditCard,
-  },
-]
-
-export default async function SettingsPage() {
-  const supabase = await createClient()
-
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect("/login")
-
-  const { data: tenantUser } = await supabase
-    .from("tenant_users")
-    .select(`
-      role,
-      tenant:tenants(
-        id,
-        name,
-        slug,
-        subscription_tier
-      )
-    `)
-    .eq("user_id", user.id)
-    .single()
-
-  if (!tenantUser?.tenant) redirect("/signup")
-  
-  const tenant = tenantUser.tenant as {
-    id: string
-    name: string
-    slug: string
-    subscription_tier: string
-  }
-  const isOwnerOrAdmin = tenantUser.role === "owner" || tenantUser.role === "admin"
-
-  if (!isOwnerOrAdmin) {
-    redirect("/admin")
-  }
-
+export default function SettingsPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Settings</h1>
-        <p className="text-muted-foreground">Manage your organization settings and preferences.</p>
-      </div>
+    <div className="p-6 max-w-4xl">
+      <h1 className="text-2xl font-bold mb-6">Settings</h1>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {settingsLinks.map((link) => {
-          const isPro = link.badge === "Pro" && tenant.subscription_tier === "tembea"
-          
-          return (
-            <Link
-              key={link.href}
-              href={isPro ? "#" : link.href}
-              className={isPro ? "cursor-not-allowed" : ""}
-            >
-              <Card className={`transition-shadow ${isPro ? "opacity-60" : "hover:shadow-md"}`}>
-                <CardHeader className="flex flex-row items-center gap-4 pb-2">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
-                    <link.icon className="h-5 w-5 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <CardTitle className="text-base">{link.title}</CardTitle>
-                      {link.badge && (
-                        <Badge variant="secondary" className="text-xs">
-                          {link.badge}
-                        </Badge>
-                      )}
-                    </div>
-                    <CardDescription className="text-sm">{link.description}</CardDescription>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                </CardHeader>
-              </Card>
-            </Link>
-          )
-        })}
-      </div>
+      <Tabs defaultValue="general">
+        <TabsList className="mb-6">
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="notifications">Notifications</TabsTrigger>
+          <TabsTrigger value="integrations">Integrations</TabsTrigger>
+        </TabsList>
 
-      {/* Current Plan */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Current Plan</CardTitle>
-          <CardDescription>You are on the {tenant.subscription_tier} plan.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Badge className="bg-zuru-sunset text-white capitalize">
-                {tenant.subscription_tier}
-              </Badge>
-              <span className="text-sm text-muted-foreground">
-                {tenant.subscription_tier === "tembea" && "Free tier - Basic features"}
-                {tenant.subscription_tier === "safari" && "Growth tier - Advanced features"}
-                {tenant.subscription_tier === "enterprise" && "Enterprise - Full features + support"}
-              </span>
+        <TabsContent value="general">
+          <div className="bg-card rounded-xl border p-6 space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="orgName">Organisation Name</Label>
+              <Input id="orgName" defaultValue="Mpumalanga Tourism & Parks Agency" />
             </div>
-            {tenant.subscription_tier !== "enterprise" && (
-              <Link
-                href="/admin/settings/billing"
-                className="text-sm font-medium text-zuru-sunset hover:underline"
-              >
-                Upgrade Plan
-              </Link>
-            )}
+            <div className="space-y-2">
+              <Label htmlFor="email">Contact Email</Label>
+              <Input id="email" type="email" defaultValue="info@mtpa.co.za" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Contact Phone</Label>
+              <Input id="phone" defaultValue="+27 13 759 5300" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="address">Address</Label>
+              <Textarea id="address" defaultValue="1 Hall Street, Nelspruit, Mpumalanga, 1200" />
+            </div>
+            <Button>Save Changes</Button>
           </div>
-        </CardContent>
-      </Card>
+        </TabsContent>
+
+        <TabsContent value="notifications">
+          <div className="bg-card rounded-xl border p-6 space-y-6">
+            {[
+              { label: "New booking notifications", desc: "Receive alerts for new reservations" },
+              { label: "Check-in reminders", desc: "Daily summary of expected arrivals" },
+              { label: "Payment alerts", desc: "Notifications for failed or pending payments" },
+              { label: "Review notifications", desc: "Alerts when guests leave reviews" },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">{item.label}</p>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                </div>
+                <Switch defaultChecked />
+              </div>
+            ))}
+            <Button>Save Preferences</Button>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="integrations">
+          <div className="bg-card rounded-xl border p-6 space-y-6">
+            {[
+              { name: "Stripe", desc: "Payment processing", status: "Connected" },
+              { name: "SendGrid", desc: "Email notifications", status: "Connected" },
+              { name: "Google Analytics", desc: "Website analytics", status: "Not connected" },
+            ].map((int) => (
+              <div key={int.name} className="flex items-center justify-between py-3 border-b last:border-0">
+                <div>
+                  <p className="font-medium">{int.name}</p>
+                  <p className="text-sm text-muted-foreground">{int.desc}</p>
+                </div>
+                <Button variant={int.status === "Connected" ? "outline" : "default"} size="sm">
+                  {int.status === "Connected" ? "Configure" : "Connect"}
+                </Button>
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }
